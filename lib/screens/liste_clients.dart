@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stettlerproapp/screens/profil.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/drawer.dart';
 import 'package:stettlerproapp/widgets/client_data.dart';
@@ -14,6 +15,18 @@ class ListeClients extends StatefulWidget {
 class _ListeClientsState extends State<ListeClients> {
   final TextEditingController _searchController = TextEditingController();
   var _inputText = '';
+
+  void _selectPerson(BuildContext context, String id) {
+    final singlePerson = people.where((person) => person.id == id).toList();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => Profil(
+          client: singlePerson,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +48,7 @@ class _ListeClientsState extends State<ListeClients> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide: const BorderSide(
-                      color: Color.fromARGB(250, 231, 231, 231), width: 0.0),
+                      color: Color.fromARGB(250, 231, 231, 231), width: 0),
                 ),
               ),
               onChanged: (value) {
@@ -50,10 +63,15 @@ class _ListeClientsState extends State<ListeClients> {
                 shrinkWrap: true,
                 itemCount: people.length,
                 itemBuilder: (context, index) {
-                  return ClientData(
-                    id: people[index].id,
-                    name: people[index].name,
-                    surname: people[index].surname,
+                  return InkWell(
+                    onTap: () {
+                      _selectPerson(context, people[index].id.toString());
+                    },
+                    child: ClientData(
+                      id: people[index].id,
+                      name: people[index].name,
+                      surname: people[index].surname,
+                    ),
                   );
                 },
               ),

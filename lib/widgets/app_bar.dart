@@ -4,6 +4,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, required this.title});
 
   final String title;
+  //final void Function() onPressed;
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -20,9 +21,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
           ),
           child: IconButton(
+            alignment: Alignment.center,
             icon: const Icon(Icons.menu),
             color: Colors.black,
-            onPressed: () {
+            onPressed: (){
               Scaffold.of(context).openDrawer();
             },
           ),

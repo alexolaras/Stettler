@@ -60,7 +60,7 @@ class CustomDrawer extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onTap: () {
-                      //Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                   ListTile(
@@ -78,7 +78,12 @@ class CustomDrawer extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SeConnecter(),
+                        )
+                      );
                     },
                   ),
                 ],

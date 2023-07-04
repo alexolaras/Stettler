@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stettlerproapp/screens/Accueil.dart';
 import 'package:stettlerproapp/widgets/styled_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SeConnecter extends StatefulWidget {
   const SeConnecter({super.key});
@@ -87,6 +86,7 @@ class _SeConnecterState extends State<SeConnecter> {
                               _enteredId = value!;
                             },
                           ),
+                          const SizedBox(height: 20,),
                           TextFormField(
                             style: Theme.of(context).textTheme.bodyMedium,
                             decoration: const InputDecoration(

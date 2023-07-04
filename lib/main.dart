@@ -3,6 +3,7 @@ import 'package:stettlerproapp/screens/liste_clients.dart';
 import 'package:stettlerproapp/screens/pas_dinternet.dart';
 import 'package:stettlerproapp/screens/se_connecter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final theme = ThemeData(
   scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
@@ -17,7 +18,9 @@ final theme = ThemeData(
 
 void main() {
   runApp(
-    const App(),
+    const ProviderScope(
+      child: App(),
+    ),
   );
 }
 
