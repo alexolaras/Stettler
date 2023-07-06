@@ -23,6 +23,9 @@ class Client {
   String id;
   String email;
   String phoneNumber;
+  String gender;
+  String language;
+  String companyName;
   Address address;
 
   Client(
@@ -31,5 +34,8 @@ class Client {
       required this.id,
       required this.email,
       required this.address,
-      required this.phoneNumber});
+      required this.phoneNumber,
+      required this.language,
+      this.companyName = '',
+      required this.gender});
 }

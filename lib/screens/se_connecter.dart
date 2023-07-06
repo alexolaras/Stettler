@@ -58,7 +58,10 @@ class _SeConnecterState extends State<SeConnecter> {
                   Container(
                     margin: const EdgeInsets.only(left: 40),
                     child: Text("Connexion",
-                        style: Theme.of(context).textTheme.titleLarge),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(fontWeight: FontWeight.bold)),
                   )
                 ],
               ),
@@ -74,8 +77,16 @@ class _SeConnecterState extends State<SeConnecter> {
                         children: [
                           TextFormField(
                             style: Theme.of(context).textTheme.bodyMedium,
-                            decoration: const InputDecoration(
-                                labelText: "Votre identifiant AGIO"),
+                            decoration: InputDecoration(
+                              labelText: "Votre identifiant AGIO",
+                              labelStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: const Color.fromARGB(
+                                          255, 124, 125, 129),
+                                      fontSize: 14),
+                            ),
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return "Vous n'avez pas saisi d'identifiant valide";
@@ -86,11 +97,21 @@ class _SeConnecterState extends State<SeConnecter> {
                               _enteredId = value!;
                             },
                           ),
-                          const SizedBox(height: 20,),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           TextFormField(
                             style: Theme.of(context).textTheme.bodyMedium,
-                            decoration: const InputDecoration(
-                                labelText: "Mot de passe"),
+                            decoration: InputDecoration(
+                              labelText: "Mot de passe",
+                              labelStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: const Color.fromARGB(
+                                          255, 124, 125, 129),
+                                      fontSize: 14),
+                            ),
                             obscureText: true,
                             validator: (value) {
                               if (value == null ||

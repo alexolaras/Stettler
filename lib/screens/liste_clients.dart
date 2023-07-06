@@ -57,6 +57,17 @@ class _ListeClientsState extends State<ListeClients> {
                 });
               },
             ),
+            Container(
+              alignment: Alignment.bottomLeft,
+              margin: const EdgeInsets.all(10),
+              child: Text(
+                'Liste clients',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,

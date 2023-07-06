@@ -1,36 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/client.dart';
-//import 'package:stettlerproapp/main.dart';
+import 'package:stettlerproapp/screens/accounting.dart';
+import 'package:stettlerproapp/screens/general.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/client_settings.dart';
+import 'package:stettlerproapp/widgets/styled_button.dart';
+
+import '../widgets/styled_button_small.dart';
 
 class Profil extends StatelessWidget {
-  const Profil({super.key, required this.client});
+  const Profil({Key? key, required this.client}) : super(key: key);
 
   final List<Client> client;
 
   @override
   Widget build(BuildContext context) {
     Widget content = const Scaffold(
-        appBar: CustomAppBar(
-          title: "Profil",
-        ),
-        body: Text("No people found"));
+      appBar: CustomAppBar(
+        title: "Profil",
+      ),
+      body: Text("No people found"),
+    );
 
     if (client.isNotEmpty) {
-      content = Column(
-        children: [
-          Expanded(
-            child: Container(
-              constraints: const BoxConstraints(maxHeight: double.infinity),
+      content = SingleChildScrollView(
+        child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(10),
               ),
-              width: double.infinity,
               margin: const EdgeInsets.all(15),
               padding: const EdgeInsets.all(15),
               child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: client.length,
                 itemBuilder: (ctx, index) => Row(
@@ -64,28 +69,22 @@ class Profil extends StatelessWidget {
                               ))
                           .toList(),
                     ),
-                    Column(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          margin: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: const Color.fromARGB(255, 249, 219, 219)),
-                          child: const Icon(Icons.edit_rounded,
-                              color: Color.fromARGB(255, 229, 37, 36)),
-                        )
-                      ],
-                    ),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      margin: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: const Color.fromARGB(255, 249, 219, 219)),
+                      child: const Icon(Icons.edit_rounded,
+                          color: Color.fromARGB(255, 229, 37, 36)),
+                    )
                   ],
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -94,7 +93,7 @@ class Profil extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
-                        .copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                        .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
@@ -109,17 +108,63 @@ class Profil extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          const Expanded(
-            child: Column(children: [
-              ClientSettings(icon: Icons.person_2_outlined, text: "General"),
-              ClientSettings(icon: Icons.person_2_outlined, text: "Historique"),
-              ClientSettings(icon: Icons.person_2_outlined, text: "Ventes"),
-              ClientSettings(icon: Icons.person_2_outlined, text: "Rabais"),
-              ClientSettings(icon: Icons.person_2_outlined, text: "Remarques"),
-            ],)
-          )
-        ],
+            Column(
+              children: [
+                ClientSettings(
+                  icon: Icons.workspace_premium_outlined,
+                  text: "Historique",
+                  onPressed: () {},
+                ),
+                ClientSettings(
+                    icon: Icons.person_2_outlined,
+                    text: "Général",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => General(client: client[0]),
+                        ),
+                      );
+                    }),
+                ClientSettings(
+                    icon: Icons.settings,
+                    text: "Comptabilité",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Accounting(client: client[0]),
+                        ),
+                      );
+                    }),
+                ClientSettings(
+                    icon: Icons.crop_original_rounded,
+                    text: "Ventes",
+                    onPressed: () {}),
+                ClientSettings(
+                    icon: Icons.crop_original_rounded,
+                    text: "Rabais",
+                    onPressed: () {}),
+                ClientSettings(
+                    icon: Icons.crop_original_rounded,
+                    text: "Tournées",
+                    onPressed: () {}),
+                ClientSettings(
+                    icon: Icons.crop_original_rounded,
+                    text: "Remarques",
+                    onPressed: () {}),
+              ],
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(20, 100, 20, 50),
+              child: StyledButtonSmall(
+                  text: "CRÉER COMMANDE",
+                  onPressed: () {},
+                  color: Colors.blue[600]!),
+            )
+          ],
+        ),
       );
     }
 

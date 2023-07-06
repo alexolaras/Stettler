@@ -22,7 +22,7 @@ class _ClientDataState extends State<ClientData> {
         color: const Color.fromARGB(255, 255, 255, 255),
         borderRadius: BorderRadius.circular(20),
       ),
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(7),
       padding: const EdgeInsets.all(10),
       width: double.infinity,
       child: Row(

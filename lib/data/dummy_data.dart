@@ -7,6 +7,9 @@ final people = [
     id: '57896',
     email: 'jérômestettler@gmail.com',
     phoneNumber: '077539485',
+    gender: 'male',
+    language: 'Francais',
+    companyName: 'StettlerInternational',
     address: Address(
         number: 8,
         city: 'Vucherens',
@@ -21,6 +24,9 @@ final people = [
     id: '55315',
     email: 'laurestettler@gmail.com',
     phoneNumber: '073833495',
+    gender: 'female',
+    language: 'Francais',
+    companyName: 'StettlerInternational',
     address: Address(
         number: 8,
         city: 'Vucherens',
@@ -35,6 +41,8 @@ final people = [
     id: '54284',
     email: 'micaeltenon@gmail.com',
     phoneNumber: '068502348',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 23,
         city: 'Vucherens',
@@ -49,6 +57,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -63,6 +73,8 @@ final people = [
     id: '41333',
     email: 'deniseEstelee@gmail.com',
     phoneNumber: '073834895',
+    gender: 'female',
+    language: 'Francais',
     address: Address(
         number: 3,
         city: 'Vucherens',
@@ -77,6 +89,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -91,6 +105,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -105,6 +121,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -119,6 +137,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -133,6 +153,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -147,6 +169,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -161,6 +185,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -175,6 +201,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
@@ -189,6 +217,8 @@ final people = [
     id: '31566',
     email: 'davidmarchal@gmail.com',
     phoneNumber: '071234595',
+    gender: 'male',
+    language: 'Francais',
     address: Address(
         number: 2,
         city: 'Vucherens',
