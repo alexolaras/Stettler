@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/classes/client.dart';
@@ -7,9 +5,9 @@ import 'package:stettlerproapp/classes/client.dart';
 import '../widgets/styled_button_small.dart';
 
 class Accounting extends StatefulWidget {
-  Accounting({super.key, required this.client});
+  const Accounting({super.key, required this.client});
 
-  Client client;
+  final Client client;
 
   @override
   State<Accounting> createState() => _AccountingState();
@@ -19,12 +17,21 @@ class _AccountingState extends State<Accounting> {
   final _formKeyAccounting = GlobalKey<FormState>();
   String _accountNumber = '';
   String _group = '';
+  String _paymentDeadline = '';
+  String _representant = '';
+  String _language = '';
+  String _refunds = '';
 
   @override
   void initState() {
     super.initState();
 
-    _accountNumber = widget.client.surname;
+    _accountNumber = widget.client.accountingInfo.accountNumber;
+    _group = widget.client.accountingInfo.group;
+    _paymentDeadline = widget.client.accountingInfo.paymentDeadline;
+    _representant = widget.client.accountingInfo.representant;
+    _language = widget.client.language;
+    _refunds = widget.client.accountingInfo.refunds.toString();
   }
 
   @override
@@ -77,7 +84,7 @@ class _AccountingState extends State<Accounting> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        //initialValue: _addressing,
+                        initialValue: _accountNumber,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "N° compte colletif",
@@ -96,11 +103,11 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                          //_addressing = value!;
+                          _accountNumber = value!;
                         },
                       ),
                       TextFormField(
-                        //initialValue: _surname,
+                        initialValue: _group,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Groupe",
@@ -119,11 +126,11 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                          //   _name = value!;
+                            _group = value!;
                         },
                       ),
                       TextFormField(
-                        //initialValue: _name,
+                        initialValue: _paymentDeadline,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Condition paiement",
@@ -142,11 +149,11 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                          //  _name = value!;
+                            _paymentDeadline = value!;
                         },
                       ),
                       TextFormField(
-                        // initialValue: _companyName,
+                         initialValue: _representant,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Représentant",
@@ -165,11 +172,11 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                          //   _companyName = value!;
+                            _representant = value!;
                         },
                       ),
                       TextFormField(
-                        //initialValue: _phoneNumber,
+                        initialValue: _language,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Langue",
@@ -188,11 +195,11 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                          //   _phoneNumber = value!;
+                            _language = value!;
                         },
                       ),
                       TextFormField(
-                        // initialValue: _email,
+                         initialValue: _refunds,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Ristourne",
@@ -211,7 +218,7 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                          //   _email = value!;
+                            _refunds = value!;
                         },
                       ),
                     ],
@@ -219,7 +226,9 @@ class _AccountingState extends State<Accounting> {
                 ),
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             Container(
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),

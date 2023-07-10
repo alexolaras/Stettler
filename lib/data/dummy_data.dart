@@ -17,6 +17,12 @@ final people = [
         postalCode: '2042',
         doorCode: '25472',
         statisticCode: '2042 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
+    purchaseInfo: PurchaseInfo(registrantSell: 'Frederic', purchaseDate: DateTime.utc(2011, 2 ,15), discount: '0', discountInvoice: '0', priceCategory: '11 Agemo 0', startDeliveryHour: DateTime.utc(2011, 2, 15, 14, 20), endDeliveryHour: DateTime.utc(2011, 2, 15, 16, 00), billingPeriod: billingPeriod, billingOther: billingOther)
   ),
   Client(
     name: 'Laure',
@@ -34,6 +40,11 @@ final people = [
         postalCode: '2042',
         doorCode: '25472',
         statisticCode: '2042 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'Michael',
@@ -50,6 +61,11 @@ final people = [
         postalCode: '2041',
         doorCode: '25455',
         statisticCode: '2041 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -66,6 +82,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'Denise',
@@ -82,6 +103,11 @@ final people = [
         postalCode: '2035',
         doorCode: '25472',
         statisticCode: '2035 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -98,6 +124,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -114,6 +145,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -130,6 +166,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -146,6 +187,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -162,6 +208,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -178,6 +229,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -194,6 +250,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -210,6 +271,11 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
   Client(
     name: 'David',
@@ -226,6 +292,10 @@ final people = [
         postalCode: '2040',
         doorCode: '25470',
         statisticCode: '2040 Vucherens'),
+    accountingInfo: AccountingInfo(
+        accountNumber: '1122 Débiteurs AGE intégré divers',
+        group: 'Débiteur',
+        paymentDeadline: '20 jours net',
+        refunds: 0),
   ),
-
 ];

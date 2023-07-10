@@ -1,56 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/screens/general2.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/classes/client.dart';
+import 'package:stettlerproapp/widgets/multiple_choice.dart';
 
 import '../widgets/styled_button_small.dart';
 
-class General extends StatefulWidget {
-  const General({super.key, required this.client});
+class General2 extends StatefulWidget {
+  const General2({super.key, required this.client});
 
   final Client client;
 
   @override
-  State<General> createState() => _GeneralState();
+  State<General2> createState() => _General2State();
 }
 
-class _GeneralState extends State<General> {
+class _General2State extends State<General2> {
   final _formKey = GlobalKey<FormState>();
-  final _formKeyAddress = GlobalKey<FormState>();
-  String _name = '';
-  String _surname = '';
-  String _addressing = '';
-  String _companyName = '';
-  String _phoneNumber = '';
-  String _email = '';
-  String _language = '';
-  String _addressNumber = '';
-  String _addressStreet = '';
-  String _addressAditional = '';
-  String _addressPostalCode = '';
-  String _addressDoorCode = '';
-  String _addressCity = '';
-  String _addressStatisticsCode = '';
+  final _formKeyOther = GlobalKey<FormState>();
+  final _formKeyHours = GlobalKey<FormState>();
+
+  String _registrantSell = '';
+  DateTime _purchaseDate = DateTime.now();
+  String? _registrantReturn = '';
+  DateTime? _returnDate;
+  String _discount = '';
+  String _discountInvoice = '';
+  String _priceCategory = '';
+  String _startDeliveryHour = '';
+  String _endDeliveryHour = '';
+  List<String> _billingPeriod = [];
+  List<String> _billingOther = [];
 
   @override
   void initState() {
     super.initState();
-
-    _addressing =
-        widget.client.gender.toString() == 'male' ? 'Monsieur' : 'Manquer';
-    _name = widget.client.name;
-    _surname = widget.client.surname;
-    _companyName = widget.client.companyName;
-    _phoneNumber = widget.client.phoneNumber;
-    _email = widget.client.email;
-    _language = widget.client.language;
-    _addressNumber = widget.client.address.number.toString();
-    _addressStreet = widget.client.address.street;
-    _addressAditional = widget.client.address.additionalAddress;
-    _addressPostalCode = widget.client.address.postalCode;
-    _addressDoorCode = widget.client.address.doorCode;
-    _addressCity = widget.client.address.city;
-    _addressStatisticsCode = widget.client.address.statisticCode;
+    _registrantSell = widget.client.purchaseInfo!.registrantSell;
+    _purchaseDate = widget.client.purchaseInfo!.purchaseDate.toUtc();
+    _registrantReturn = widget.client.purchaseInfo!.registrantReturn;
+    _returnDate = widget.client.purchaseInfo!.returnDate?.toUtc();
+    _discount = widget.client.purchaseInfo!.discount;
+    _discountInvoice = widget.client.purchaseInfo!.discountInvoice;
+    _priceCategory = widget.client.purchaseInfo!.priceCategory;
+    _startDeliveryHour =
+        '${widget.client.purchaseInfo!.startDeliveryHour.hour.toString()}:${widget.client.purchaseInfo!.startDeliveryHour.minute.toString()}';
+    _endDeliveryHour =
+        '${widget.client.purchaseInfo!.endDeliveryHour.hour.toString()}:${widget.client.purchaseInfo!.endDeliveryHour.minute.toString()}';
   }
 
   @override
@@ -91,6 +85,19 @@ class _GeneralState extends State<General> {
               ),
             ),
             Container(
+              height: 50,
+              alignment: Alignment.bottomLeft,
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'CLIENT ACQUIS/ANNNULÉ PAR',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.white,
@@ -104,10 +111,10 @@ class _GeneralState extends State<General> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        initialValue: _addressing,
+                        initialValue: _registrantSell,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Politesse",
+                          labelText: "Client acquis par",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -123,14 +130,14 @@ class _GeneralState extends State<General> {
                           return null;
                         },
                         onSaved: (value) {
-                          _addressing = value!;
+                          _registrantSell = value!;
                         },
                       ),
                       TextFormField(
-                        initialValue: _surname,
+                        initialValue: _purchaseDate.toString(),
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "NOM Client",
+                          labelText: "Date",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -146,14 +153,14 @@ class _GeneralState extends State<General> {
                           return null;
                         },
                         onSaved: (value) {
-                          _name = value!;
+                          _purchaseDate = DateTime.parse(value!);
                         },
                       ),
                       TextFormField(
-                        initialValue: _name,
+                        initialValue: _registrantReturn,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Prénom",
+                          labelText: "Client annulé par",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -169,14 +176,14 @@ class _GeneralState extends State<General> {
                           return null;
                         },
                         onSaved: (value) {
-                          _name = value!;
+                          _registrantReturn = value!;
                         },
                       ),
                       TextFormField(
-                        initialValue: _companyName,
+                        initialValue: _returnDate.toString(),
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Nom enterprise (optionnel)",
+                          labelText: "Date",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -192,76 +199,7 @@ class _GeneralState extends State<General> {
                           return null;
                         },
                         onSaved: (value) {
-                          _companyName = value!;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _phoneNumber,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Numéro de téléphone",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(255, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _phoneNumber = value!;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _email,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(255, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _email = value!;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _language,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Langue",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(255, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _language = value!;
+                          _returnDate = DateTime.parse(value!);
                         },
                       ),
                     ],
@@ -270,32 +208,16 @@ class _GeneralState extends State<General> {
               ),
             ),
             Container(
+              height: 50,
+              alignment: Alignment.bottomLeft,
               width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Adresse",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Indiquez l'adresse qui sera mentionnée sur lesfactures. Prenez-soin de l'exactitude des données.",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(fontSize: 12),
-                  ),
-                ],
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'AUTRE',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ),
             Container(
@@ -307,15 +229,15 @@ class _GeneralState extends State<General> {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Form(
-                  key: _formKeyAddress,
+                  key: _formKeyOther,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        initialValue: _addressNumber,
+                        initialValue: _discount,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Numéro",
+                          labelText: "Rabais",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -331,14 +253,14 @@ class _GeneralState extends State<General> {
                           return null;
                         },
                         onSaved: (value) {
-                          _addressNumber = value!;
+                          _discount = value!;
                         },
                       ),
                       TextFormField(
-                        initialValue: _addressStreet,
+                        initialValue: _discountInvoice,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Rue",
+                          labelText: "Escompte s/bdl (facture)",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -354,14 +276,14 @@ class _GeneralState extends State<General> {
                           return null;
                         },
                         onSaved: (value) {
-                          _addressStreet = value!;
+                          _discountInvoice = value!;
                         },
                       ),
                       TextFormField(
-                        initialValue: _addressAditional,
+                        initialValue: _priceCategory,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Complément adresse",
+                          labelText: "Categorie prix",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -377,99 +299,7 @@ class _GeneralState extends State<General> {
                           return null;
                         },
                         onSaved: (value) {
-                          _addressAditional = value!;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _addressPostalCode,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Code postal",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(255, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _addressPostalCode = value!;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _addressDoorCode,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Code porte",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(255, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _addressDoorCode = value!;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _addressCity,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Ville",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(255, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _addressCity = value!;
-                        },
-                      ),
-                      TextFormField(
-                        initialValue: _addressStatisticsCode,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Ville",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(255, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _addressStatisticsCode = value!;
+                          _priceCategory = value!;
                         },
                       ),
                     ],
@@ -478,18 +308,90 @@ class _GeneralState extends State<General> {
               ),
             ),
             Container(
+              height: 50,
+              alignment: Alignment.bottomLeft,
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'HEURES LIVRAISON',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white,
+              ),
+              margin: const EdgeInsets.all(20),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Form(
+                  key: _formKeyHours,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        initialValue: _startDeliveryHour,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        decoration: InputDecoration(
+                          labelText: "Début",
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                  color:
+                                      const Color.fromARGB(255, 124, 125, 129),
+                                  fontSize: 14),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return "Remplissez tous les champs obligatoires";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _startDeliveryHour = value!;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: _endDeliveryHour,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        decoration: InputDecoration(
+                          labelText: "Fin",
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                  color:
+                                      const Color.fromARGB(255, 124, 125, 129),
+                                  fontSize: 14),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return "Remplissez tous les champs obligatoires";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _endDeliveryHour = value!;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            MultipleChoice(items: billingPeriod),
+            MultipleChoice(items: billingOther),
+            Container(
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
               child: StyledButtonSmall(
                   text: "SAUVEGARDER",
-                 onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => General2(client: widget.client),
-                        ),
-                      );
-                    },
+                  onPressed: () {},
                   color: Colors.blue[600]!),
             )
           ],
