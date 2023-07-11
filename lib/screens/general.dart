@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/screens/general2.dart';
+import 'package:stettlerproapp/screens/sales.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/classes/client.dart';
 
@@ -56,7 +56,7 @@ class _GeneralState extends State<General> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Général"),
+      appBar: const CustomAppBar(title: "Général", function: 'back',),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -113,7 +113,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -136,7 +136,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -159,7 +159,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -182,7 +182,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -205,7 +205,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -228,7 +228,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -251,7 +251,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -321,7 +321,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -344,7 +344,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -367,7 +367,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -390,7 +390,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -413,7 +413,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -436,7 +436,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -459,7 +459,7 @@ class _GeneralState extends State<General> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -482,14 +482,7 @@ class _GeneralState extends State<General> {
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
               child: StyledButtonSmall(
                   text: "SAUVEGARDER",
-                 onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => General2(client: widget.client),
-                        ),
-                      );
-                    },
+                 onPressed: () {},
                   color: Colors.blue[600]!),
             )
           ],

@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/screens/accounting.dart';
 import 'package:stettlerproapp/screens/general.dart';
+import 'package:stettlerproapp/screens/remarks.dart';
+import 'package:stettlerproapp/screens/sales.dart';
+import 'package:stettlerproapp/screens/tours.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/client_settings.dart';
 import 'package:stettlerproapp/widgets/styled_button.dart';
 
 import '../widgets/styled_button_small.dart';
+import 'discount.dart';
 
 class Profil extends StatelessWidget {
   const Profil({Key? key, required this.client}) : super(key: key);
@@ -18,6 +22,7 @@ class Profil extends StatelessWidget {
     Widget content = const Scaffold(
       appBar: CustomAppBar(
         title: "Profil",
+        function: 'back',
       ),
       body: Text("No people found"),
     );
@@ -25,7 +30,6 @@ class Profil extends StatelessWidget {
     if (client.isNotEmpty) {
       content = SingleChildScrollView(
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               decoration: BoxDecoration(
@@ -140,19 +144,47 @@ class Profil extends StatelessWidget {
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Ventes",
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Sales(client: client[0]),
+                        ),
+                      );
+                    }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Rabais",
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Discount(client: client[0]),
+                        ),
+                      );
+                    }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Tournées",
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Tours(client: client[0]),
+                        ),
+                      );
+                    }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Remarques",
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Remarks(client: client[0]),
+                        ),
+                      );
+                    }),
               ],
             ),
             Container(
@@ -169,7 +201,10 @@ class Profil extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "Profil"),
+      appBar: const CustomAppBar(
+        title: "Profil",
+        function: 'back',
+      ),
       body: content,
     );
   }

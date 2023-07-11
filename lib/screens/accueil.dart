@@ -9,7 +9,7 @@ class Accueil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: const CustomAppBar(title: "Choix enterprise"),
+       appBar: const CustomAppBar(title: "Choix enterprise", function: 'drawer'),
        drawer: const CustomDrawer(),
        body: Container(
         margin: const EdgeInsets.all(30),

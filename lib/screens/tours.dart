@@ -4,40 +4,39 @@ import 'package:stettlerproapp/classes/client.dart';
 
 import '../widgets/styled_button_small.dart';
 
-class Accounting extends StatefulWidget {
-  const Accounting({super.key, required this.client});
+class Tours extends StatefulWidget {
+  const Tours({super.key, required this.client});
 
   final Client client;
 
   @override
-  State<Accounting> createState() => _AccountingState();
+  State<Tours> createState() => _ToursState();
 }
 
-class _AccountingState extends State<Accounting> {
-  final _formKeyAccounting = GlobalKey<FormState>();
-  String _accountNumber = '';
-  String _group = '';
-  String _paymentDeadline = '';
-  String _representant = '';
-  String _language = '';
-  String _refunds = '';
+class _ToursState extends State<Tours> {
+  final _formKeyTours = GlobalKey<FormState>();
+
+  String _transportationNumber = '';
+  String _transportationCode = '';
+  DateTime _transportationDate = DateTime.now();
+  String _transportationSEQ = '';
+  String _sellerCode = '';
+
 
   @override
   void initState() {
     super.initState();
-
-    _accountNumber = widget.client.accountingInfo.accountNumber;
-    _group = widget.client.accountingInfo.group;
-    _paymentDeadline = widget.client.accountingInfo.paymentDeadline;
-    _representant = widget.client.accountingInfo.representant;
-    _language = widget.client.language;
-    _refunds = widget.client.accountingInfo.refunds.toString();
+    _transportationNumber = widget.client.purchaseInfo!.transportation.transportationNumber;
+    _transportationCode = widget.client.purchaseInfo!.transportation.transportationCode;
+    _transportationDate = widget.client.purchaseInfo!.transportation.transportationDate.toUtc();
+    _transportationSEQ = widget.client.purchaseInfo!.transportation.transportationSEQ;
+    _sellerCode = widget.client.purchaseInfo!.transportation.sellerCode;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Comptabilité',function: 'back',),
+      appBar: const CustomAppBar(title: 'Tournées', function: 'back', additional: Icons.add_circle,),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -79,15 +78,15 @@ class _AccountingState extends State<Accounting> {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Form(
-                  key: _formKeyAccounting,
+                  key: _formKeyTours,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        initialValue: _accountNumber,
+                         initialValue: _transportationNumber,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "N° compte colletif",
+                          labelText: "Tournées",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -103,14 +102,14 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                          _accountNumber = value!;
+                            _transportationNumber = value!;
                         },
                       ),
                       TextFormField(
-                        initialValue: _group,
+                         initialValue: _transportationCode,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Groupe",
+                          labelText: "Code",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -126,14 +125,14 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                            _group = value!;
+                            _transportationCode = value!;
                         },
                       ),
                       TextFormField(
-                        initialValue: _paymentDeadline,
+                         initialValue: _transportationDate.toString(),
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Condition paiement",
+                          labelText: "Date",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -149,14 +148,14 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                            _paymentDeadline = value!;
+                            _transportationDate = DateTime.parse(value!);
                         },
                       ),
                       TextFormField(
-                         initialValue: _representant,
+                         initialValue: _transportationSEQ,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Représentant",
+                          labelText: "SÉQ",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -172,14 +171,14 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                            _representant = value!;
+                            _transportationSEQ = value!;
                         },
                       ),
                       TextFormField(
-                        initialValue: _language,
+                         initialValue: _sellerCode,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
-                          labelText: "Langue",
+                          labelText: "Code vendeur",
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -195,30 +194,7 @@ class _AccountingState extends State<Accounting> {
                           return null;
                         },
                         onSaved: (value) {
-                            _language = value!;
-                        },
-                      ),
-                      TextFormField(
-                         initialValue: _refunds,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          labelText: "Ristourne",
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  color:
-                                      const Color.fromARGB(150, 124, 125, 129),
-                                  fontSize: 14),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Remplissez tous les champs obligatoires";
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                            _refunds = value!;
+                            _sellerCode = value!;
                         },
                       ),
                     ],

@@ -57,6 +57,21 @@ class AccountingInfo {
     required this.refunds,
   });
 }
+class Transportation{
+  String transportationNumber;
+  String transportationCode;
+  DateTime transportationDate;
+  String transportationSEQ;
+  String sellerCode;
+
+  Transportation({
+    required this.transportationNumber,
+    required this.transportationCode,
+    required this.transportationDate,
+    required this.transportationSEQ,
+    required this.sellerCode
+  });
+}
 
 class PurchaseInfo {
   String registrantSell;
@@ -70,6 +85,9 @@ class PurchaseInfo {
   DateTime endDeliveryHour;
   List<String> billingPeriod;
   List<String> billingOther;
+  String remarksDelivery;
+  String remarksPhone;
+  Transportation transportation;
 
   PurchaseInfo({
     required this.registrantSell,
@@ -83,6 +101,9 @@ class PurchaseInfo {
     required this.endDeliveryHour,
     required this.billingPeriod,
     required this.billingOther,
+    required this.remarksDelivery,
+    required this.remarksPhone,
+    required this.transportation,
   });
 }
 

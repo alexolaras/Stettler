@@ -84,7 +84,7 @@ class _SeConnecterState extends State<SeConnecter> {
                                   .bodySmall!
                                   .copyWith(
                                       color: const Color.fromARGB(
-                                          255, 124, 125, 129),
+                                          150, 124, 125, 129),
                                       fontSize: 14),
                             ),
                             validator: (value) {
@@ -109,7 +109,7 @@ class _SeConnecterState extends State<SeConnecter> {
                                   .bodySmall!
                                   .copyWith(
                                       color: const Color.fromARGB(
-                                          255, 124, 125, 129),
+                                          150, 124, 125, 129),
                                       fontSize: 14),
                             ),
                             obscureText: true,

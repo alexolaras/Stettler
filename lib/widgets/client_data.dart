@@ -43,25 +43,41 @@ class _ClientDataState extends State<ClientData> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 5),
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
                 child: Text(
                   "2342342",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ),
               Row(
                 children: [
                   Text(
                     widget.name,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: const Color.fromARGB(150, 124, 125, 129),
+                        fontSize: 14),
                   ),
                   Text(
                     widget.surname,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: const Color.fromARGB(150, 124, 125, 129),
+                        fontSize: 14),
+                  ),
+                  Text(
+                    '|',
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: const Color.fromARGB(150, 124, 125, 129),
+                        fontSize: 14),
                   ),
                   Text(
                     widget.id,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: const Color.fromARGB(150, 124, 125, 129),
+                        fontSize: 14),
                   ),
                 ]
                     .map((widget) => Padding(

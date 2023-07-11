@@ -5,16 +5,16 @@ import 'package:stettlerproapp/widgets/multiple_choice.dart';
 
 import '../widgets/styled_button_small.dart';
 
-class General2 extends StatefulWidget {
-  const General2({super.key, required this.client});
+class Sales extends StatefulWidget {
+  const Sales({super.key, required this.client});
 
   final Client client;
 
   @override
-  State<General2> createState() => _General2State();
+  State<Sales> createState() => _SalesState();
 }
 
-class _General2State extends State<General2> {
+class _SalesState extends State<Sales> {
   final _formKey = GlobalKey<FormState>();
   final _formKeyOther = GlobalKey<FormState>();
   final _formKeyHours = GlobalKey<FormState>();
@@ -50,7 +50,7 @@ class _General2State extends State<General2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Général"),
+      appBar: const CustomAppBar(title: "Ventes", function: 'back',),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -120,7 +120,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -143,7 +143,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -166,7 +166,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -189,7 +189,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -243,7 +243,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -266,7 +266,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -289,7 +289,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -343,7 +343,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -366,7 +366,7 @@ class _General2State extends State<General2> {
                               .bodySmall!
                               .copyWith(
                                   color:
-                                      const Color.fromARGB(255, 124, 125, 129),
+                                      const Color.fromARGB(150, 124, 125, 129),
                                   fontSize: 14),
                         ),
                         validator: (value) {
@@ -384,7 +384,33 @@ class _General2State extends State<General2> {
                 ),
               ),
             ),
+            Container(
+              height: 50,
+              alignment: Alignment.bottomLeft,
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'PÉRIODE FACTURATION',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
             MultipleChoice(items: billingPeriod),
+            Container(
+              height: 50,
+              alignment: Alignment.bottomLeft,
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'AUTRES',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
             MultipleChoice(items: billingOther),
             Container(
               width: double.infinity,
