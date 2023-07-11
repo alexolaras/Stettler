@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/classes/client.dart';
 
 class ClientSettings extends StatelessWidget {
   const ClientSettings({super.key, required this.icon, required this.text, required this.onPressed});

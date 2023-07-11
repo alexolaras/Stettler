@@ -38,7 +38,7 @@ class _SeConnecterState extends State<SeConnecter> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: 170,
                 child: Image.asset('lib/assets/images/logo.png'),
               ),

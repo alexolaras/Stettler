@@ -28,8 +28,8 @@ class _SalesState extends State<Sales> {
   String _priceCategory = '';
   String _startDeliveryHour = '';
   String _endDeliveryHour = '';
-  List<String> _billingPeriod = [];
-  List<String> _billingOther = [];
+  //List<String> _billingPeriod = [];
+  //List<String> _billingOther = [];
 
   @override
   void initState() {

@@ -7,7 +7,6 @@ import 'package:stettlerproapp/screens/sales.dart';
 import 'package:stettlerproapp/screens/tours.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/client_settings.dart';
-import 'package:stettlerproapp/widgets/styled_button.dart';
 
 import '../widgets/styled_button_small.dart';
 import 'discount.dart';

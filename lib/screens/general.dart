@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/screens/sales.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/classes/client.dart';
 
