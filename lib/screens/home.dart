@@ -3,8 +3,8 @@ import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/drawer.dart';
 import 'package:stettlerproapp/widgets/enterprise_square.dart';
 
-class Accueil extends StatelessWidget {
-  const  Accueil({super.key});
+class Home extends StatelessWidget {
+  const  Home({super.key});
 
   @override
   Widget build(BuildContext context) {

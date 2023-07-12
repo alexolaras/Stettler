@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/screens/profil.dart';
+import 'package:stettlerproapp/screens/profile.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/drawer.dart';
 import 'package:stettlerproapp/widgets/client_data.dart';
 import 'package:stettlerproapp/data/dummy_data.dart';
 import '../classes/client.dart';
 
-class ListeClients extends StatefulWidget {
-  const ListeClients({super.key});
+class ClientList extends StatefulWidget {
+  const ClientList({super.key});
 
   @override
-  State<ListeClients> createState() => _ListeClientsState();
+  State<ClientList> createState() => _ClientListState();
 }
 
-class _ListeClientsState extends State<ListeClients> {
+class _ClientListState extends State<ClientList> {
   final TextEditingController _searchController = TextEditingController();
   List<Client> filteredClients = people;
 
@@ -22,7 +22,7 @@ class _ListeClientsState extends State<ListeClients> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => Profil(
+        builder: (ctx) => Profile(
           client: singlePerson,
         ),
       ),
@@ -58,17 +58,22 @@ class _ListeClientsState extends State<ListeClients> {
                     borderSide: const BorderSide(
                       width: 0,
                       color: Color.fromARGB(150, 124, 125, 129),
-                      
                     ),
                   ),
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  prefixIcon: const Icon(Icons.search, color: Color.fromARGB(150, 124, 125, 129),),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: Color.fromARGB(150, 124, 125, 129),
+                  ),
                   hintText: 'Nom ou référence client',
                   hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: const Color.fromARGB(150, 124, 125, 129),
                       fontSize: 14),
                 ),
                 onChanged: _searchClient),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               alignment: Alignment.bottomLeft,
               margin: const EdgeInsets.all(10),
@@ -77,7 +82,7 @@ class _ListeClientsState extends State<ListeClients> {
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
-                    .copyWith(fontWeight: FontWeight.bold, fontSize: 16),
+                    .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
               ),
             ),
             Expanded(

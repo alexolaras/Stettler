@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ClientData extends StatefulWidget {
+class ClientData extends StatelessWidget {
   const ClientData(
       {super.key, required this.name, required this.surname, required this.id});
 
@@ -8,13 +8,6 @@ class ClientData extends StatefulWidget {
   final String surname;
   final String id;
 
-  @override
-  State<ClientData> createState() {
-    return _ClientDataState();
-  }
-}
-
-class _ClientDataState extends State<ClientData> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,13 +49,13 @@ class _ClientDataState extends State<ClientData> {
               Row(
                 children: [
                   Text(
-                    widget.name,
+                    name,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: const Color.fromARGB(150, 124, 125, 129),
                         fontSize: 14),
                   ),
                   Text(
-                    widget.surname,
+                    surname,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: const Color.fromARGB(150, 124, 125, 129),
                         fontSize: 14),
@@ -74,7 +67,7 @@ class _ClientDataState extends State<ClientData> {
                         fontSize: 14),
                   ),
                   Text(
-                    widget.id,
+                    id,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: const Color.fromARGB(150, 124, 125, 129),
                         fontSize: 14),

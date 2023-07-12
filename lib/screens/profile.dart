@@ -11,8 +11,8 @@ import 'package:stettlerproapp/widgets/client_settings.dart';
 import '../widgets/styled_button_small.dart';
 import 'discount.dart';
 
-class Profil extends StatelessWidget {
-  const Profil({Key? key, required this.client}) : super(key: key);
+class Profile extends StatelessWidget {
+  const Profile({Key? key, required this.client}) : super(key: key);
 
   final List<Client> client;
 

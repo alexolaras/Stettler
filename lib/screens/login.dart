@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/screens/Accueil.dart';
+import 'package:stettlerproapp/screens/home.dart';
 import 'package:stettlerproapp/widgets/styled_button.dart';
 
-class SeConnecter extends StatefulWidget {
-  const SeConnecter({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<SeConnecter> createState() => _SeConnecterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SeConnecterState extends State<SeConnecter> {
+class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   var _enteredId = '';
   var _enteredPassword = '';
@@ -24,7 +24,7 @@ class _SeConnecterState extends State<SeConnecter> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const Accueil(),
+        builder: (context) => const Home(),
       ),
     );
   }

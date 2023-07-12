@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stettlerproapp/widgets/styled_button.dart';
 
-class PasDInternet extends StatelessWidget {
-  const PasDInternet({super.key});
+class NoInternet extends StatelessWidget {
+  const NoInternet({super.key});
 
   @override
   Widget build(BuildContext context) {

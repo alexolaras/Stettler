@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/screens/accueil.dart';
-import 'package:stettlerproapp/screens/liste_clients.dart';
-import 'package:stettlerproapp/screens/se_connecter.dart';
+import 'package:stettlerproapp/screens/home.dart';
+import 'package:stettlerproapp/screens/client_list.dart';
+import 'package:stettlerproapp/screens/login.dart';
+import 'package:stettlerproapp/screens/product_list.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -35,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Accueil(),
+                          builder: (context) => const Home(),
                         ),
                       );
                     },
@@ -49,7 +50,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ListeClients(),
+                          builder: (context) => const ClientList(),
                         ),
                       );
                     },
@@ -60,7 +61,12 @@ class CustomDrawer extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProductList(),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -81,7 +87,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SeConnecter(),
+                          builder: (context) => const Login(),
                         )
                       );
                     },
