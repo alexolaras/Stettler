@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stettlerproapp/data/dummy_products.dart';
 import 'package:stettlerproapp/screens/product_details.dart';
+import 'package:stettlerproapp/screens/shopping_cart.dart';
 
 import '../classes/product.dart';
 import '../widgets/app_bar.dart';
@@ -19,6 +20,7 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   final TextEditingController _searchController = TextEditingController();
   List<Product> filteredProducts = products;
+  List<Product> cartProducts = [];
 
   void _selectProduct(BuildContext context, String id) {
     final singleProduct =
@@ -28,6 +30,7 @@ class _ProductListState extends State<ProductList> {
       MaterialPageRoute(
         builder: (ctx) => ProductDetails(
           product: singleProduct,
+          cartProducts: cartProducts,
         ),
       ),
     );
@@ -44,13 +47,26 @@ class _ProductListState extends State<ProductList> {
     setState(() => filteredProducts = suggestions);
   }
 
+  void _openCart(List<Product> cartItems){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => ShoppingCart(
+          cartItems: cartItems,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-          title: "Liste produits",
-          function: 'back',
-          additional: Icons.shopping_bag_outlined),
+      appBar: CustomAppBar(
+        title: "Liste produits",
+        function: 'back',
+        additionalIcon: Icons.shopping_bag_outlined,
+        additionalFunction: () => _openCart(cartProducts),
+      ),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),

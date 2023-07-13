@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/screens/client_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stettlerproapp/screens/login.dart';
 import 'package:stettlerproapp/screens/product_list.dart';
 
 final theme = ThemeData(
@@ -25,7 +25,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: const ProductList(),
+      home: const Login(),
       debugShowCheckedModeBanner: false,
     );
   }

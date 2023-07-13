@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class ProductData extends StatelessWidget {
@@ -35,7 +33,10 @@ class ProductData extends StatelessWidget {
             height: 100,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Hero(tag: id, child: Image.network(image),),
+              child: Hero(
+                tag: id,
+                child: Image.network(image),
+              ),
             ),
           ),
           const SizedBox(width: 5),

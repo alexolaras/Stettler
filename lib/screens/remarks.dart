@@ -99,7 +99,7 @@ class _RemarksState extends State<Remarks> {
                           return null;
                         },
                         onSaved: (value) {
-                           _remarksDelivery = value!;
+                          _remarksDelivery = value!;
                         },
                       ),
                     ],
@@ -140,7 +140,7 @@ class _RemarksState extends State<Remarks> {
                           return null;
                         },
                         onSaved: (value) {
-                            _remarksPhone = value!;
+                          _remarksPhone = value!;
                         },
                       ),
                     ],

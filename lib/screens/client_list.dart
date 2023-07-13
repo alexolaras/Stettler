@@ -99,6 +99,7 @@ class _ClientListState extends State<ClientList> {
                       setState(() {
                         filteredClients = people;
                       });
+                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                     child: ClientData(
                       id: filteredClients[index].id,

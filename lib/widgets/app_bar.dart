@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar(
-      {super.key,
-      required this.title,
-      required this.function,
-      this.additional});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    required this.function,
+    this.additionalIcon,
+    this.additionalFunction,
+  });
 
   final String title;
   final String function;
-  final IconData? additional;
+  final IconData? additionalIcon;
+  final Function()? additionalFunction;
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -47,7 +50,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           child: IconButton(
-              icon: Icon(additional), onPressed: () {}, iconSize: 40),
+              icon: Icon(
+                additionalIcon,
+                color: Colors.white,
+              ),
+              onPressed: additionalFunction,
+              iconSize: 40),
         ),
       ],
       backgroundColor: const Color.fromARGB(255, 229, 36, 36),

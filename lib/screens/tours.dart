@@ -36,7 +36,7 @@ class _ToursState extends State<Tours> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Tournées', function: 'back', additional: Icons.add_circle,),
+      appBar: const CustomAppBar(title: 'Tournées', function: 'back', additionalIcon: Icons.add_circle,),
       body: SingleChildScrollView(
         child: Column(
           children: [

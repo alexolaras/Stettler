@@ -8,6 +8,7 @@ final products = [
     image: "https://thiriet.ch/images/7130.jpg",
     ingredients:
         "Ingrédients:Lait écrémé en poudre réhydraté<(lait)> (origine France), purée de fraise 17%, sucre,crème fraîche< (lait)> (origine France) 15%, laitécrémé en poudre< (lait)> (origine France),émulsifiant : mono- et diglycérides d'acides gras,épaississants : farine de graines de caroube -gomme guar, extrait de vanille, arôme naturel devanille, arôme naturel de fraise",
+    quantity: 24,
   ),
   Product(
     id: '6820',
@@ -16,6 +17,7 @@ final products = [
     image: "https://thiriet.ch/images/6820.jpg",
     ingredients:
         "Ingrédients:Lait écrémé en poudre réhydraté<(lait)> (origine France), purée de fraise 17%, sucre,crème fraîche< (lait)> (origine France) 15%, laitécrémé en poudre< (lait)> (origine France),émulsifiant : mono- et diglycérides d'acides gras,épaississants : farine de graines de caroube -gomme guar, extrait de vanille, arôme naturel devanille, arôme naturel de fraise",
+    quantity: 123,
   ),
   Product(
     id: '2110',
@@ -24,6 +26,7 @@ final products = [
     image: "https://thiriet.ch/images/2110.jpg",
     ingredients:
         "Ingrédients:Lait écrémé en poudre réhydraté<(lait)> (origine France), purée de fraise 17%, sucre,crème fraîche< (lait)> (origine France) 15%, laitécrémé en poudre< (lait)> (origine France),émulsifiant : mono- et diglycérides d'acides gras,épaississants : farine de graines de caroube -gomme guar, extrait de vanille, arôme naturel devanille, arôme naturel de fraise",
+    quantity: 42,
   ),
   Product(
     id: '2201',
@@ -32,6 +35,7 @@ final products = [
     image: 'https://thiriet.ch/images/2201.jpg',
     ingredients:
         "Ingrédients:Lait écrémé en poudre réhydraté<(lait)> (origine France), purée de fraise 17%, sucre,crème fraîche< (lait)> (origine France) 15%, laitécrémé en poudre< (lait)> (origine France),émulsifiant : mono- et diglycérides d'acides gras,épaississants : farine de graines de caroube -gomme guar, extrait de vanille, arôme naturel devanille, arôme naturel de fraise",
+    quantity: 96,
   ),
   Product(
     id: '2225',
@@ -40,6 +44,7 @@ final products = [
     image: "https://thiriet.ch/images/2225.jpg",
     ingredients:
         "Ingrédients:Lait écrémé en poudre réhydraté<(lait)> (origine France), purée de fraise 17%, sucre,crème fraîche< (lait)> (origine France) 15%, laitécrémé en poudre< (lait)> (origine France),émulsifiant : mono- et diglycérides d'acides gras,épaississants : farine de graines de caroube -gomme guar, extrait de vanille, arôme naturel devanille, arôme naturel de fraise",
+    quantity: 57,
   ),
   Product(
     id: '1830',
@@ -48,6 +53,7 @@ final products = [
     image: "https://thiriet.ch/images/1830.jpg",
     ingredients:
         "Ingrédients:Lait écrémé en poudre réhydraté<(lait)> (origine France), purée de fraise 17%, sucre,crème fraîche< (lait)> (origine France) 15%, laitécrémé en poudre< (lait)> (origine France),émulsifiant : mono- et diglycérides d'acides gras,épaississants : farine de graines de caroube -gomme guar, extrait de vanille, arôme naturel devanille, arôme naturel de fraise",
+        quantity: 99,
   ),
   Product(
     id: '67011',
@@ -56,5 +62,6 @@ final products = [
     image: "https://thiriet.ch/images/67011.jpg",
     ingredients:
         "Ingrédients:Lait écrémé en poudre réhydraté<(lait)> (origine France), purée de fraise 17%, sucre,crème fraîche< (lait)> (origine France) 15%, laitécrémé en poudre< (lait)> (origine France),émulsifiant : mono- et diglycérides d'acides gras,épaississants : farine de graines de caroube -gomme guar, extrait de vanille, arôme naturel devanille, arôme naturel de fraise",
+    quantity: 115,
   ),
 ];
