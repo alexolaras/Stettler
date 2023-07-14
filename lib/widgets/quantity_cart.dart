@@ -33,34 +33,35 @@ class _QuantityCartState extends State<QuantityCart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
       ),
-      margin: const EdgeInsets.all(15),
+      margin: const EdgeInsets.all(5),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 20,
+                width: 30,
+                height: 30,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(5),
                   color: const Color.fromARGB(255, 229, 36, 36),
                 ),
                 child: IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: _decreaseQuantity,
                   icon: const Icon(
                     Icons.remove,
-                    size: 45,
+                    size: 20,
                     color: Colors.white,
                   ),
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 20,
               ),
               Text(
                 _productQuantity.toString(),
@@ -70,24 +71,27 @@ class _QuantityCartState extends State<QuantityCart> {
                     .copyWith(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               const SizedBox(
-                width: 10,
+                width: 20,
               ),
               Container(
-                width: 20,
+                width: 30,
+                height: 30,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(3),
-                    color: const Color.fromARGB(255, 229, 36, 36)),
+                  borderRadius: BorderRadius.circular(5),
+                  color: const Color.fromARGB(255, 229, 36, 36),
+                ),
                 child: IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: _increaseQuantity,
                   icon: const Icon(
-                    Icons.add_circle,
-                    size: 45,
+                    Icons.add,
+                    size: 20,
                     color: Colors.white,
                   ),
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

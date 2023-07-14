@@ -40,13 +40,14 @@ class ProductDetails extends StatelessWidget {
             height: 30,
           ),
           Container(
+            
             width: 120,
             height: 40,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: const Color.fromARGB(255, 229, 36, 36)),
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(5),
+            padding: EdgeInsets.zero,
             child: TextButton(
               child: Text("SUPPRIMER",
                   style: Theme.of(context)
@@ -101,7 +102,7 @@ class ProductDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 color: const Color.fromARGB(255, 44, 213, 111)),
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(5),
+            padding: EdgeInsets.zero,
             child: TextButton(
               child: Text("CONFIRMER",
                   style: Theme.of(context)

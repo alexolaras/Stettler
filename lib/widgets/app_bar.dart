@@ -29,6 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
           ),
           child: IconButton(
+            padding: EdgeInsets.zero,
             alignment: Alignment.center,
             icon: function == 'back'
                 ? const Icon(Icons.arrow_back_sharp)

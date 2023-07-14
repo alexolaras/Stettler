@@ -79,7 +79,7 @@ class ProductData extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     color: const Color.fromARGB(255, 229, 36, 36),
                   ),
-                  margin: const EdgeInsets.all(15),
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
@@ -93,11 +93,18 @@ class ProductData extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                  iconSize: 40,
-                  icon: const Icon(Icons.add_circle),
-                  color: const Color.fromARGB(255, 52, 51, 56),
-                  onPressed: () {},
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding: EdgeInsets.zero,
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                    iconSize: 40,
+                    icon: const Icon(Icons.add_circle),
+                    color: const Color.fromARGB(255, 52, 51, 56),
+                    onPressed: () {},
+                  ),
                 )
               ],
             ),

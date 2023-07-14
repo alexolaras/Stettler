@@ -25,7 +25,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: const Login(),
+      home: const ProductList(),
       debugShowCheckedModeBanner: false,
     );
   }

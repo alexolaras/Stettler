@@ -22,8 +22,8 @@ class _CartItemState extends State<CartItem> {
         color: const Color.fromARGB(255, 255, 255, 255),
         borderRadius: BorderRadius.circular(20),
       ),
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(10),
       width: double.infinity,
       child: Row(
         children: [
@@ -32,8 +32,7 @@ class _CartItemState extends State<CartItem> {
             height: 100,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child:  Image.network(widget.cartItem.image),
-              
+              child: Image.network(widget.cartItem.image),
             ),
           ),
           const SizedBox(width: 5),
@@ -50,17 +49,23 @@ class _CartItemState extends State<CartItem> {
                       .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    '${widget.cartItem.price.toString()} CHF',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(fontSize: 20),
-                  ),
-                  //QuantityCart(product: widget.cartItem)
-                ],
+              Container(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.6),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        'CHF ${widget.cartItem.price.toString()}',
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    QuantityCart(product: widget.cartItem),
+                  ],
+                ),
               )
             ],
           ),
