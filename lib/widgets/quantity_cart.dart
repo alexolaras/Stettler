@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/product.dart';
 
 class QuantityCart extends StatefulWidget {
-  const QuantityCart({super.key, required this.product});
+  QuantityCart({super.key, required this.product, required this.quantity});
 
   final Product product;
+  int quantity;
   @override
   State<StatefulWidget> createState() {
     return _QuantityCartState();
@@ -12,20 +13,19 @@ class QuantityCart extends StatefulWidget {
 }
 
 class _QuantityCartState extends State<QuantityCart> {
-  int _productQuantity = 1;
 
   void _decreaseQuantity() {
-    setState(() {
-      if (_productQuantity > 1) {
-        _productQuantity--;
-      }
-    });
+    if (widget.quantity > 1) {
+      setState(() {
+        widget.quantity--;
+      });
+    }
   }
 
   void _increaseQuantity() {
-    if (_productQuantity < widget.product.quantity) {
+    if (widget.quantity < widget.product.quantity) {
       setState(() {
-        _productQuantity++;
+        widget.quantity++;
       });
     }
   }
@@ -64,7 +64,7 @@ class _QuantityCartState extends State<QuantityCart> {
                 width: 20,
               ),
               Text(
-                _productQuantity.toString(),
+                widget.quantity.toString(),
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!

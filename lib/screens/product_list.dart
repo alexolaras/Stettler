@@ -21,6 +21,9 @@ class _ProductListState extends State<ProductList> {
   final TextEditingController _searchController = TextEditingController();
   List<Product> filteredProducts = products;
   List<Product> cartProducts = [];
+  final ValueNotifier<int> quantity = ValueNotifier<int>(1);
+  List<int> quantityList = [];
+
 
   void _selectProduct(BuildContext context, String id) {
     final singleProduct =
@@ -31,6 +34,8 @@ class _ProductListState extends State<ProductList> {
         builder: (ctx) => ProductDetails(
           product: singleProduct,
           cartProducts: cartProducts,
+          quantity: quantity,
+          quantityList: quantityList,
         ),
       ),
     );
@@ -47,12 +52,13 @@ class _ProductListState extends State<ProductList> {
     setState(() => filteredProducts = suggestions);
   }
 
-  void _openCart(List<Product> cartItems){
+  void _openCart(){
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (ctx) => ShoppingCart(
-          cartItems: cartItems,
+          cartItems: cartProducts,
+          quantityList: quantityList,
         ),
       ),
     );
@@ -65,7 +71,7 @@ class _ProductListState extends State<ProductList> {
         title: "Liste produits",
         function: 'back',
         additionalIcon: Icons.shopping_bag_outlined,
-        additionalFunction: () => _openCart(cartProducts),
+        additionalFunction: () => _openCart(),
       ),
       drawer: const CustomDrawer(),
       body: Container(

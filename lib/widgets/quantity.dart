@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/product.dart';
 
 class Quantity extends StatefulWidget {
-  const Quantity({super.key, required this.product});
+   const Quantity({super.key, required this.product, required this.quantity});
 
   final Product product;
+  final ValueNotifier<int> quantity;
 
   @override
   State<Quantity> createState() {
@@ -13,20 +14,20 @@ class Quantity extends StatefulWidget {
 }
 
 class _QuantityState extends State<Quantity> {
-  int _productQuantity = 1;
+
 
   void _decreaseQuantity() {
-    setState(() {
-      if (_productQuantity > 1) {
-        _productQuantity--;
-      }
-    });
+    if (widget.quantity.value > 1) {
+      setState(() {
+        widget.quantity.value--;
+      });
+    }
   }
 
   void _increaseQuantity() {
-    if (_productQuantity < widget.product.quantity) {
+    if (widget.quantity.value < widget.product.quantity) {
       setState(() {
-        _productQuantity++;
+        widget.quantity.value++;
       });
     }
   }
@@ -68,7 +69,7 @@ class _QuantityState extends State<Quantity> {
                 width: 20,
               ),
               Text(
-                _productQuantity.toString(),
+                widget.quantity.value.toString(),
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!

@@ -5,10 +5,11 @@ import '../classes/product.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 
-class ShoppingCart extends StatelessWidget {
-  const ShoppingCart({super.key, required this.cartItems});
+class ShoppingCart extends StatelessWidget{
+  const ShoppingCart({super.key, required this.cartItems, required this.quantityList});
 
   final List<Product> cartItems;
+  final List<int> quantityList;
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +24,20 @@ class ShoppingCart extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: Column(
           children: [
+            
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: cartItems.length,
+                itemCount: quantityList.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      
+                    },
                     child: CartItem(
                       cartItem: cartItems[index],
+                      quantity: quantityList[index]
                     ),
                   );
                 },
