@@ -5,13 +5,18 @@ import 'package:stettlerproapp/widgets/quantity.dart';
 import 'package:stettlerproapp/widgets/styled_button.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key, required this.product, required this.cartProducts});
+  const ProductDetails({super.key, required this.product, required this.cartProducts, required this.quantity, required this.quantityList});
 
   final List<Product> product;
   final List<Product> cartProducts;
+  final ValueNotifier<int> quantity;
+  final List<int> quantityList;
 
-  void _addToCart(BuildContext context, Product cartProduct){
-    cartProducts.add(cartProduct);
+
+  void _addToCart(){
+    cartProducts.add(product[0]);
+    quantityList.add(quantity.value);
+    quantity.value = 1;
   }
 
   showAlertDialog(BuildContext context) {
@@ -109,7 +114,7 @@ class ProductDetails extends StatelessWidget {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: Colors.white)),
-              onPressed: () => _addToCart(context, product[0]),
+              onPressed: () => _addToCart(),
             ),
           )
         ],
@@ -260,7 +265,7 @@ class ProductDetails extends StatelessWidget {
                     ),
               ),
             ),
-            Quantity(product: product[0]),
+            Quantity(product: product[0], quantity: quantity,),
             Container(
               padding: const EdgeInsets.all(15),
               child: StyledButton(

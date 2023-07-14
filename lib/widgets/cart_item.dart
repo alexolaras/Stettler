@@ -4,9 +4,10 @@ import 'package:stettlerproapp/widgets/quantity_cart.dart';
 import '../classes/product.dart';
 
 class CartItem extends StatefulWidget {
-  const CartItem({super.key, required this.cartItem});
+  const CartItem({super.key, required this.cartItem, required this.quantity});
 
   final Product cartItem;
+  final int quantity;
 
   @override
   State<StatefulWidget> createState() {
@@ -63,7 +64,7 @@ class _CartItemState extends State<CartItem> {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    QuantityCart(product: widget.cartItem),
+                    QuantityCart(product: widget.cartItem, quantity: widget.quantity),
                   ],
                 ),
               )
