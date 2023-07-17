@@ -4,10 +4,17 @@ import 'package:stettlerproapp/widgets/quantity_cart.dart';
 import '../classes/product.dart';
 
 class CartItem extends StatefulWidget {
-  const CartItem({super.key, required this.cartItem, required this.quantity});
+  const CartItem(
+      {super.key,
+      required this.cartItem,
+      required this.quantity,
+      required this.totalPrice,
+      required this.updateQuantityCallback});
 
   final Product cartItem;
   final int quantity;
+  final double totalPrice;
+  final Function(int, double) updateQuantityCallback;
 
   @override
   State<StatefulWidget> createState() {
@@ -40,14 +47,19 @@ class _CartItemState extends State<CartItem> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Text(
-                  widget.cartItem.name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+              Container(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.6),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Text(widget.cartItem.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                      softWrap: false,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
                 ),
               ),
               Container(
@@ -55,16 +67,24 @@ class _CartItemState extends State<CartItem> {
                     maxWidth: MediaQuery.of(context).size.width * 0.6),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: [
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Text(
-                        'CHF ${widget.cartItem.price.toString()}',
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                        'CHF ${(widget.cartItem.price * widget.quantity).toStringAsFixed(2)}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    QuantityCart(product: widget.cartItem, quantity: widget.quantity),
+                    QuantityCart(
+                      product: widget.cartItem,
+                      quantity: widget.quantity,
+                      totalPrice: widget.totalPrice,
+                      updateQuantityCallback: widget.updateQuantityCallback,
+                    ),
                   ],
                 ),
               )

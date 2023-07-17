@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/product.dart';
 
 class QuantityCart extends StatefulWidget {
-  QuantityCart({super.key, required this.product, required this.quantity});
+  QuantityCart(
+      {super.key,
+      required this.product,
+      required this.quantity,
+      required this.totalPrice,
+      required this.updateQuantityCallback});
 
   final Product product;
+  double totalPrice;
   int quantity;
+  final Function(int, double) updateQuantityCallback;
+
   @override
   State<StatefulWidget> createState() {
     return _QuantityCartState();
@@ -13,11 +21,11 @@ class QuantityCart extends StatefulWidget {
 }
 
 class _QuantityCartState extends State<QuantityCart> {
-
   void _decreaseQuantity() {
     if (widget.quantity > 1) {
       setState(() {
-        widget.quantity--;
+        widget.updateQuantityCallback(
+            --widget.quantity, widget.totalPrice - widget.product.price);
       });
     }
   }
@@ -25,7 +33,8 @@ class _QuantityCartState extends State<QuantityCart> {
   void _increaseQuantity() {
     if (widget.quantity < widget.product.quantity) {
       setState(() {
-        widget.quantity++;
+        widget.updateQuantityCallback(
+            ++widget.quantity, widget.totalPrice + widget.product.price);
       });
     }
   }
@@ -61,17 +70,17 @@ class _QuantityCartState extends State<QuantityCart> {
                 ),
               ),
               const SizedBox(
-                width: 20,
+                width: 15,
               ),
               Text(
                 widget.quantity.toString(),
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(fontWeight: FontWeight.bold, fontSize: 24),
+                    .copyWith(fontSize: 16),
               ),
               const SizedBox(
-                width: 20,
+                width: 15,
               ),
               Container(
                 width: 30,

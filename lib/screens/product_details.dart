@@ -5,18 +5,26 @@ import 'package:stettlerproapp/widgets/quantity.dart';
 import 'package:stettlerproapp/widgets/styled_button.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key, required this.product, required this.cartProducts, required this.quantity, required this.quantityList});
+  const ProductDetails(
+      {super.key,
+      required this.product,
+      required this.cartProducts,
+      required this.quantity,
+      required this.quantityList,
+      required this.totalPrice});
 
   final List<Product> product;
   final List<Product> cartProducts;
   final ValueNotifier<int> quantity;
   final List<int> quantityList;
+  final ValueNotifier<double> totalPrice;
 
-
-  void _addToCart(){
+  void _addToCart(context) {
     cartProducts.add(product[0]);
     quantityList.add(quantity.value);
+    totalPrice.value += product[0].price * quantity.value;
     quantity.value = 1;
+    Navigator.of(context).pop();
   }
 
   showAlertDialog(BuildContext context) {
@@ -45,7 +53,6 @@ class ProductDetails extends StatelessWidget {
             height: 30,
           ),
           Container(
-            
             width: 120,
             height: 40,
             decoration: BoxDecoration(
@@ -114,7 +121,7 @@ class ProductDetails extends StatelessWidget {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: Colors.white)),
-              onPressed: () => _addToCart(),
+              onPressed: () => _addToCart(context),
             ),
           )
         ],
@@ -196,7 +203,7 @@ class ProductDetails extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            '${product[index].price.toString()} CHF',
+                            '${product[index].price.toStringAsFixed(2)} CHF',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -265,7 +272,10 @@ class ProductDetails extends StatelessWidget {
                     ),
               ),
             ),
-            Quantity(product: product[0], quantity: quantity,),
+            Quantity(
+              product: product[0],
+              quantity: quantity,
+            ),
             Container(
               padding: const EdgeInsets.all(15),
               child: StyledButton(

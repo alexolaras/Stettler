@@ -41,7 +41,7 @@ class ProductData extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           SizedBox(
-            width: 150,
+            width: MediaQuery.of(context).size.width * 0.35,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -74,18 +74,17 @@ class ProductData extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: const Color.fromARGB(255, 229, 36, 36),
                   ),
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   child: Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
-                    alignment: Alignment.topLeft,
+                        const EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+                    alignment: Alignment.center,
                     child: Text(
-                      '${price.toString()} CHF',
+                      '${price.toStringAsFixed(2)} CHF',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!

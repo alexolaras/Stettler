@@ -23,6 +23,7 @@ class _ProductListState extends State<ProductList> {
   List<Product> cartProducts = [];
   final ValueNotifier<int> quantity = ValueNotifier<int>(1);
   List<int> quantityList = [];
+  final ValueNotifier<double> totalPrice = ValueNotifier<double>(0);
 
 
   void _selectProduct(BuildContext context, String id) {
@@ -36,6 +37,7 @@ class _ProductListState extends State<ProductList> {
           cartProducts: cartProducts,
           quantity: quantity,
           quantityList: quantityList,
+          totalPrice: totalPrice,
         ),
       ),
     );
@@ -59,6 +61,7 @@ class _ProductListState extends State<ProductList> {
         builder: (ctx) => ShoppingCart(
           cartItems: cartProducts,
           quantityList: quantityList,
+          totalPrice: totalPrice,
         ),
       ),
     );
