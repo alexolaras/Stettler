@@ -32,7 +32,7 @@ class _RemarksState extends State<Remarks> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Remarques',
-        function: 'back',
+        function: CustomAppBarFunction.back,
       ),
       body: SingleChildScrollView(
         child: Column(

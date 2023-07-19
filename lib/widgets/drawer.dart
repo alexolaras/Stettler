@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stettlerproapp/screens/home.dart';
 import 'package:stettlerproapp/screens/client_list.dart';
 import 'package:stettlerproapp/screens/login.dart';
+import 'package:stettlerproapp/screens/order_history.dart';
 import 'package:stettlerproapp/screens/product_list.dart';
+//import 'package:stettlerproapp/classes/order.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -75,7 +77,11 @@ class CustomDrawer extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => const OrderHistory(),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -85,11 +91,10 @@ class CustomDrawer extends StatelessWidget {
                     ),
                     onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Login(),
-                        )
-                      );
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Login(),
+                          ));
                     },
                   ),
                 ],

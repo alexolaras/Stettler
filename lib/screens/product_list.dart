@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/data/dummy_products.dart';
 import 'package:stettlerproapp/screens/product_details.dart';
 import 'package:stettlerproapp/screens/shopping_cart.dart';
 
+import '../classes/order.dart';
 import '../classes/product.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/product_data.dart';
 
 class ProductList extends StatefulWidget {
-  const ProductList({super.key});
+  const ProductList({super.key, this.client});
+
+  final Client? client;
+
 
   @override
   State<ProductList> createState() {
@@ -62,6 +67,7 @@ class _ProductListState extends State<ProductList> {
           cartItems: cartProducts,
           quantityList: quantityList,
           totalPrice: totalPrice,
+          client: widget.client,
         ),
       ),
     );
@@ -72,7 +78,7 @@ class _ProductListState extends State<ProductList> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Liste produits",
-        function: 'back',
+        function: CustomAppBarFunction.back,
         additionalIcon: Icons.shopping_bag_outlined,
         additionalFunction: () => _openCart(),
       ),

@@ -55,7 +55,7 @@ class _GeneralState extends State<General> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Général", function: 'back',),
+      appBar: const CustomAppBar(title: "Général", function: CustomAppBarFunction.back,),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

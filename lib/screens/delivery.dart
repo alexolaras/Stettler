@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/classes/client.dart';
 
 import '../widgets/styled_button_small.dart';
 
-class Tours extends StatefulWidget {
-  const Tours({super.key, required this.client});
+class Delivery extends StatefulWidget {
+  const Delivery({super.key, required this.client});
 
   final Client client;
 
   @override
-  State<Tours> createState() => _ToursState();
+  State<Delivery> createState() => _DeliveryState();
 }
 
-class _ToursState extends State<Tours> {
+class _DeliveryState extends State<Delivery> {
   final _formKeyTours = GlobalKey<FormState>();
 
   String _transportationNumber = '';
@@ -22,21 +23,28 @@ class _ToursState extends State<Tours> {
   String _transportationSEQ = '';
   String _sellerCode = '';
 
-
   @override
   void initState() {
     super.initState();
-    _transportationNumber = widget.client.purchaseInfo!.transportation.transportationNumber;
-    _transportationCode = widget.client.purchaseInfo!.transportation.transportationCode;
-    _transportationDate = widget.client.purchaseInfo!.transportation.transportationDate.toUtc();
-    _transportationSEQ = widget.client.purchaseInfo!.transportation.transportationSEQ;
+    _transportationNumber =
+        widget.client.purchaseInfo!.transportation.transportationNumber;
+    _transportationCode =
+        widget.client.purchaseInfo!.transportation.transportationCode;
+    _transportationDate =
+        widget.client.purchaseInfo!.transportation.transportationDate.toUtc();
+    _transportationSEQ =
+        widget.client.purchaseInfo!.transportation.transportationSEQ;
     _sellerCode = widget.client.purchaseInfo!.transportation.sellerCode;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Tournées', function: 'back', additionalIcon: Icons.add_circle,),
+      appBar: const CustomAppBar(
+        title: 'Tournées',
+        function: CustomAppBarFunction.back,
+        additionalIcon: Icons.add_circle,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -83,7 +91,7 @@ class _ToursState extends State<Tours> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                         initialValue: _transportationNumber,
+                        initialValue: _transportationNumber,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Tournées",
@@ -102,11 +110,11 @@ class _ToursState extends State<Tours> {
                           return null;
                         },
                         onSaved: (value) {
-                            _transportationNumber = value!;
+                          _transportationNumber = value!;
                         },
                       ),
                       TextFormField(
-                         initialValue: _transportationCode,
+                        initialValue: _transportationCode,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Code",
@@ -125,11 +133,12 @@ class _ToursState extends State<Tours> {
                           return null;
                         },
                         onSaved: (value) {
-                            _transportationCode = value!;
+                          _transportationCode = value!;
                         },
                       ),
                       TextFormField(
-                         initialValue: _transportationDate.toString(),
+                        initialValue: DateFormat('dd/MM/yyyy')
+                            .format(_transportationDate),
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Date",
@@ -148,11 +157,11 @@ class _ToursState extends State<Tours> {
                           return null;
                         },
                         onSaved: (value) {
-                            _transportationDate = DateTime.parse(value!);
+                          _transportationDate = DateTime.parse(value!);
                         },
                       ),
                       TextFormField(
-                         initialValue: _transportationSEQ,
+                        initialValue: _transportationSEQ,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "SÉQ",
@@ -171,11 +180,11 @@ class _ToursState extends State<Tours> {
                           return null;
                         },
                         onSaved: (value) {
-                            _transportationSEQ = value!;
+                          _transportationSEQ = value!;
                         },
                       ),
                       TextFormField(
-                         initialValue: _sellerCode,
+                        initialValue: _sellerCode,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Code vendeur",
@@ -194,7 +203,7 @@ class _ToursState extends State<Tours> {
                           return null;
                         },
                         onSaved: (value) {
-                            _sellerCode = value!;
+                          _sellerCode = value!;
                         },
                       ),
                     ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/widgets/multiple_choice.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/styled_button_small.dart';
 
@@ -28,8 +29,8 @@ class _SalesState extends State<Sales> {
   String _priceCategory = '';
   String _startDeliveryHour = '';
   String _endDeliveryHour = '';
-  //List<String> _billingPeriod = [];
-  //List<String> _billingOther = [];
+  //List<String> _selectedBillingPeriod = [];
+  //List<String> _selectedBillingOther = [];
 
   @override
   void initState() {
@@ -42,15 +43,18 @@ class _SalesState extends State<Sales> {
     _discountInvoice = widget.client.purchaseInfo!.discountInvoice;
     _priceCategory = widget.client.purchaseInfo!.priceCategory;
     _startDeliveryHour =
-        '${widget.client.purchaseInfo!.startDeliveryHour.hour.toString()}:${widget.client.purchaseInfo!.startDeliveryHour.minute.toString()}';
+        DateFormat.Hm().format(widget.client.purchaseInfo!.startDeliveryHour);
     _endDeliveryHour =
-        '${widget.client.purchaseInfo!.endDeliveryHour.hour.toString()}:${widget.client.purchaseInfo!.endDeliveryHour.minute.toString()}';
+        DateFormat.Hm().format(widget.client.purchaseInfo!.endDeliveryHour);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Ventes", function: 'back',),
+      appBar: const CustomAppBar(
+        title: "Ventes",
+        function: CustomAppBarFunction.back,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -134,7 +138,8 @@ class _SalesState extends State<Sales> {
                         },
                       ),
                       TextFormField(
-                        initialValue: _purchaseDate.toString(),
+                        initialValue:
+                            DateFormat('dd/MM/yyyy').format(_purchaseDate),
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Date",
@@ -180,7 +185,7 @@ class _SalesState extends State<Sales> {
                         },
                       ),
                       TextFormField(
-                        initialValue: _returnDate.toString(),
+                        initialValue: _returnDate == null ? '' : DateFormat('dd/MM/yyyy').format(_purchaseDate),
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           labelText: "Date",

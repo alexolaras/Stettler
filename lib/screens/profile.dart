@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/screens/accounting.dart';
 import 'package:stettlerproapp/screens/general.dart';
+import 'package:stettlerproapp/screens/product_list.dart';
 import 'package:stettlerproapp/screens/remarks.dart';
 import 'package:stettlerproapp/screens/sales.dart';
-import 'package:stettlerproapp/screens/tours.dart';
+import 'package:stettlerproapp/screens/delivery.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/client_settings.dart';
+import 'package:stettlerproapp/widgets/no_data.dart';
 
 import '../widgets/styled_button_small.dart';
 import 'discount.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key? key, required this.client}) : super(key: key);
+  const Profile({super.key, required this.client});
 
   final List<Client> client;
 
@@ -21,7 +23,7 @@ class Profile extends StatelessWidget {
     Widget content = const Scaffold(
       appBar: CustomAppBar(
         title: "Profil",
-        function: 'back',
+        function: CustomAppBarFunction.back,
       ),
       body: Text("No people found"),
     );
@@ -144,45 +146,77 @@ class Profile extends StatelessWidget {
                     icon: Icons.crop_original_rounded,
                     text: "Ventes",
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Sales(client: client[0]),
-                        ),
-                      );
+                      if (client[0].purchaseInfo != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Sales(client: client[0]),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const NoData(page: 'sales'),
+                          ),
+                        );
+                      }
                     }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Rabais",
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Discount(client: client[0]),
-                        ),
-                      );
+                      if (client[0].purchaseInfo != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Discount(client: client[0]),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const NoData(page: 'discount'),
+                          ),
+                        );
+                      }
                     }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Tournées",
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Tours(client: client[0]),
-                        ),
-                      );
+                      if (client[0].purchaseInfo != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Delivery(client: client[0]),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const NoData(page: 'delivery'),
+                          ),
+                        );
+                      }
                     }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Remarques",
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Remarks(client: client[0]),
-                        ),
-                      );
+                      if (client[0].purchaseInfo != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Remarks(client: client[0]),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => const NoData(page: 'remarks'),
+                          ),
+                        );
+                      }
                     }),
               ],
             ),
@@ -191,7 +225,13 @@ class Profile extends StatelessWidget {
               margin: const EdgeInsets.fromLTRB(20, 100, 20, 50),
               child: StyledButtonSmall(
                   text: "CRÉER COMMANDE",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => ProductList(client: client[0]),
+                      ),
+                    );
+                  },
                   color: Colors.blue[600]!),
             )
           ],
@@ -202,7 +242,7 @@ class Profile extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(
         title: "Profil",
-        function: 'back',
+        function: CustomAppBarFunction.back,
       ),
       body: content,
     );

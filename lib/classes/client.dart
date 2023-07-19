@@ -99,13 +99,14 @@ class PurchaseInfo {
     required this.priceCategory,
     required this.startDeliveryHour,
     required this.endDeliveryHour,
-    required this.billingPeriod,
-    required this.billingOther,
+    List<String>? billingPeriod,
+    List<String>? billingOther,
     required this.remarksDelivery,
     required this.remarksPhone,
     required this.transportation,
-  });
+  }) : billingPeriod = billingPeriod ?? [], billingOther = billingOther ?? [];
 }
+
 
 class Client {
   String name;

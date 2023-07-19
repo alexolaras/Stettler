@@ -34,13 +34,16 @@ class _MultipleChoiceState extends State<MultipleChoice> {
         padding: const EdgeInsets.all(20),
         child: ListBody(
           children: widget.items
-              .map((item) => CheckboxListTile(
+              .map(
+                (item) => CheckboxListTile(
                   value: _selectedItems.contains(item),
                   title: Text(
                     item,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(),
                   ),
-                  onChanged: (isChecked) => _itemChange(item, isChecked!),),)
+                  onChanged: (isChecked) => _itemChange(item, isChecked!),
+                ),
+              )
               .toList(),
         ),
       ),

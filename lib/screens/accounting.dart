@@ -37,7 +37,7 @@ class _AccountingState extends State<Accounting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Comptabilité',function: 'back',),
+      appBar: const CustomAppBar(title: 'Comptabilité',function: CustomAppBarFunction.back,),
       body: SingleChildScrollView(
         child: Column(
           children: [

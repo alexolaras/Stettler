@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+enum CustomAppBarFunction {
+  back,
+  drawer,
+}
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
@@ -10,7 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final String title;
-  final String function;
+  final CustomAppBarFunction function;
   final IconData? additionalIcon;
   final Function()? additionalFunction;
 
@@ -31,12 +36,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: IconButton(
             padding: EdgeInsets.zero,
             alignment: Alignment.center,
-            icon: function == 'back'
+            icon: function == CustomAppBarFunction.back
                 ? const Icon(Icons.arrow_back_sharp)
                 : const Icon(Icons.menu),
             color: Colors.black,
             onPressed: () {
-              function == 'drawer'
+              function == CustomAppBarFunction.drawer
                   ? Scaffold.of(context).openDrawer()
                   : Navigator.pop(context);
             },
@@ -63,7 +68,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(title,
           style: const TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
       elevation: 0,
     );
   }

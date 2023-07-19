@@ -21,7 +21,6 @@ class StyledButtonSmall extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          fixedSize: Size(MediaQuery.of(context).size.width * 1.5, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),

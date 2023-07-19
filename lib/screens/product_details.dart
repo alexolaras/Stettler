@@ -11,7 +11,8 @@ class ProductDetails extends StatelessWidget {
       required this.cartProducts,
       required this.quantity,
       required this.quantityList,
-      required this.totalPrice});
+      required this.totalPrice,
+      });
 
   final List<Product> product;
   final List<Product> cartProducts;
@@ -19,13 +20,22 @@ class ProductDetails extends StatelessWidget {
   final List<int> quantityList;
   final ValueNotifier<double> totalPrice;
 
-  void _addToCart(context) {
+void _addToCart(context) {
+  int index = cartProducts.indexWhere((item) => item == product[0]);
+
+  if (index >= 0) {
+    quantityList[index] += quantity.value;
+    totalPrice.value += product[0].price * quantity.value;
+  } else {
     cartProducts.add(product[0]);
     quantityList.add(quantity.value);
     totalPrice.value += product[0].price * quantity.value;
-    quantity.value = 1;
-    Navigator.of(context).pop();
   }
+
+  quantity.value = 1;
+
+  Navigator.of(context).pop();
+}
 
   showAlertDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -140,7 +150,7 @@ class ProductDetails extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Détail produit',
-        function: 'back',
+        function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
         additionalFunction: () => showAlertDialog(context),
       ),

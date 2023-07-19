@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stettlerproapp/screens/login.dart';
-import 'package:stettlerproapp/screens/product_list.dart';
+import 'package:stettlerproapp/screens/client_list.dart';
 
 final theme = ThemeData(
   scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
@@ -25,7 +24,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: const Login(),
+      home: const ClientList(),
       debugShowCheckedModeBanner: false,
     );
   }
