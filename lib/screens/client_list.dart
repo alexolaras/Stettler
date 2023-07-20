@@ -42,6 +42,7 @@ class _ClientListState extends State<ClientList> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: const CustomAppBar(title: "Liste clients", function: CustomAppBarFunction.drawer),
       drawer: const CustomDrawer(),

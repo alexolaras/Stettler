@@ -20,6 +20,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Widget content = const Scaffold(
       appBar: CustomAppBar(
         title: "Profil",

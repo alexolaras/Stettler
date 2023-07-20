@@ -8,7 +8,7 @@ import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 
 class OrderHistory extends ConsumerStatefulWidget {
-  const OrderHistory({Key? key}) : super(key: key);
+  const OrderHistory({super.key});
 
   @override
   OrderHistoryState createState() => OrderHistoryState();
@@ -42,7 +42,7 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-          title: "Liste clients", function: CustomAppBarFunction.drawer),
+          title: "Mise à jour commandes AGIO", function: CustomAppBarFunction.drawer),
       drawer: const CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -64,7 +64,7 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
                   Icons.search,
                   color: Color.fromARGB(150, 124, 125, 129),
                 ),
-                hintText: 'Nom ou référence client',
+                hintText: 'N°Bulletin ou référence client',
                 hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: const Color.fromARGB(150, 124, 125, 129),
                       fontSize: 14,
@@ -79,7 +79,7 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
               alignment: Alignment.bottomLeft,
               margin: const EdgeInsets.all(10),
               child: Text(
-                'Liste clients',
+                'Vos dernières commandes',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -94,7 +94,7 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      // Implement onTap action here.
+                    
                     },
                     child: OrderData(
                       order: filteredOrders[index],

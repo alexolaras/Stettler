@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stettlerproapp/classes/product.dart';
 
 class ClientData extends StatelessWidget {
   const ClientData(
@@ -30,6 +31,7 @@ class ClientData extends StatelessWidget {
             child: const Icon(
               Icons.check_circle_rounded,
               color: Color.fromARGB(255, 34, 193, 87),
+              size: 30,
             ),
           ),
           const SizedBox(width: 12),

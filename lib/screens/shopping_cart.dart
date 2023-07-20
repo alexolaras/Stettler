@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/screens/client_list.dart';
+import 'package:stettlerproapp/screens/home.dart';
 import 'package:stettlerproapp/screens/order_history.dart';
 import 'package:stettlerproapp/widgets/cart_item.dart';
 import 'package:stettlerproapp/widgets/checkout_total.dart';
@@ -44,23 +45,25 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
     final Order order = Order(
         orderNumber: _generateOrdercode(),
         client: widget.client!,
-        orderedItems: widget.cartItems);
+        orderedItems: widget.cartItems,
+        isFinished: true);
     ref.read(ordersProvider.notifier).addOrder(order);
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => const OrderHistory(),
+        builder: (ctx) => const Home(),
       ),
     );
   }
-String _generateOrdercode() {
-  final random = Random();
-  const availableChars =
-      '1234567890';
-  final randomString = List.generate(7,
-      (index) => availableChars[random.nextInt(availableChars.length)]).join();
 
-  return randomString;
-}
+  String _generateOrdercode() {
+    final random = Random();
+    const availableChars = '1234567890';
+    final randomString = List.generate(
+            7, (index) => availableChars[random.nextInt(availableChars.length)])
+        .join();
+
+    return randomString;
+  }
 
   showCheckoutDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -88,7 +91,7 @@ String _generateOrdercode() {
             height: 30,
           ),
           Container(
-            width: 120,
+            width: 160,
             height: 40,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -96,7 +99,7 @@ String _generateOrdercode() {
             alignment: Alignment.center,
             padding: EdgeInsets.zero,
             child: TextButton(
-                child: Text("CONFIRMER",
+                child: Text("REVENIR ACCEUIL",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
