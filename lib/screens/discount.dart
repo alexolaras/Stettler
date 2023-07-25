@@ -25,7 +25,7 @@ class _DiscountState extends State<Discount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Rabais', function: CustomAppBarFunction.drawer,),
+      appBar: const CustomAppBar(title: 'Rabais', function: CustomAppBarFunction.back,),
       body: SingleChildScrollView(
         child: Column(
           children: [

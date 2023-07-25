@@ -1,3 +1,5 @@
+import 'order.dart';
+
 final List<String> billingPeriod = [
   'Directe',
   'Journalière',
@@ -99,12 +101,12 @@ class PurchaseInfo {
     required this.priceCategory,
     required this.startDeliveryHour,
     required this.endDeliveryHour,
-    List<String>? billingPeriod,
-    List<String>? billingOther,
+    required this.billingPeriod,
+    required this.billingOther,
     required this.remarksDelivery,
     required this.remarksPhone,
     required this.transportation,
-  }) : billingPeriod = billingPeriod ?? [], billingOther = billingOther ?? [];
+  });
 }
 
 
@@ -119,7 +121,8 @@ class Client {
   String companyName;
   Address address;
   AccountingInfo accountingInfo;
-  PurchaseInfo? purchaseInfo;
+  PurchaseInfo purchaseInfo;
+  List<Order> orderList;
 
   Client({
     required this.name,
@@ -132,6 +135,7 @@ class Client {
     this.companyName = '',
     required this.gender,
     required this.accountingInfo,
-    this.purchaseInfo,
+    required this.purchaseInfo,
+    required this.orderList
   });
 }

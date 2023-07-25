@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stettlerproapp/classes/order.dart';
+import 'package:stettlerproapp/widgets/progress_indicator.dart';
+
+import '../classes/client.dart';
 
 class OrderData extends StatelessWidget {
   const OrderData({super.key, required this.order});
 
   final Order order;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -51,25 +55,28 @@ class OrderData extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                order.orderNumber,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Text(
+                  order.orderNumber,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
               ),
               Row(
                 children: [
                   Row(
                     children: [
                       Text(
-                        order.client.name,
+                        order.clientName,
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: const Color.fromARGB(150, 124, 125, 129),
                             fontSize: 12),
                       ),
                       Text(
-                        order.client.surname,
+                        order.clientSurname,
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: const Color.fromARGB(150, 124, 125, 129),
                             fontSize: 12),
@@ -81,7 +88,7 @@ class OrderData extends StatelessWidget {
                             fontSize: 12),
                       ),
                       Text(
-                        order.client.id,
+                        order.clientId,
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: const Color.fromARGB(150, 124, 125, 129),
                             fontSize: 12),
@@ -130,20 +137,24 @@ class OrderData extends StatelessWidget {
                       ],
                     ),
                   )
-                : Container(
-                    padding: const EdgeInsets.all(5),
+                : SizedBox(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          'Progress bar...',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: Colors.red),
-                        ),
-                        const SizedBox(
-                          height: 3,
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          width: 85,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: const CustomRoundedLinearProgressIndicator(
+                              backgroundColor:
+                                  Color.fromARGB(255, 246, 246, 246),
+                              valueColor: Color.fromARGB(255, 239, 84, 72),
+                              value: 0.6,
+                              minHeight: 10,
+                              borderRadius: 10,
+                            ),
+                          ),
                         ),
                         Text(
                           'A terminer',

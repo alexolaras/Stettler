@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stettlerproapp/classes/product.dart';
 
 class ClientData extends StatelessWidget {
   const ClientData(

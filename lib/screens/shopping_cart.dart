@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/screens/client_list.dart';
 import 'package:stettlerproapp/screens/home.dart';
-import 'package:stettlerproapp/screens/order_history.dart';
+import 'package:stettlerproapp/widgets/bottom_nav_bar.dart';
 import 'package:stettlerproapp/widgets/cart_item.dart';
 import 'package:stettlerproapp/widgets/checkout_total.dart';
 import 'package:stettlerproapp/providers/orders_provider.dart';
@@ -44,7 +44,9 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
   void _addToOrderHistory() {
     final Order order = Order(
         orderNumber: _generateOrdercode(),
-        client: widget.client!,
+        clientName: widget.client!.name,
+        clientSurname: widget.client!.surname,
+        clientId: widget.client!.id,
         orderedItems: widget.cartItems,
         isFinished: true);
     ref.read(ordersProvider.notifier).addOrder(order);
@@ -184,44 +186,43 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
         function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
       ),
+      bottomNavigationBar: const CustomBottomNavBar(),
       drawer: const CustomDrawer(),
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  for (int index = 0;
-                      index < widget.quantityList.length;
-                      index++)
-                    InkWell(
-                      onTap: () {},
-                      child: CartItem(
-                        cartItem: widget.cartItems[index],
-                        quantity: widget.quantityList[index],
-                        totalPrice: widget.totalPrice.value,
-                        updateQuantityCallback: (newQuantity, newPrice) {
-                          updateCartItemQuantity(index, newQuantity, newPrice);
-                        },
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            CheckoutTotal(
-              totalPrice: widget.totalPrice,
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              child: StyledButtonSmall(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: ListView.builder(
+          itemCount: widget.quantityList.length + 2,
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            if (index < widget.quantityList.length) {
+              return InkWell(
+                onTap: () {},
+                child: CartItem(
+                  cartItem: widget.cartItems[index],
+                  quantity: widget.quantityList[index],
+                  totalPrice: widget.totalPrice.value,
+                  updateQuantityCallback: (newQuantity, newPrice) {
+                    updateCartItemQuantity(index, newQuantity, newPrice);
+                  },
+                ),
+              );
+            } else if (index == widget.quantityList.length) {
+              return CheckoutTotal(
+                totalPrice: widget.totalPrice,
+              );
+            } else {
+              return Container(
+                width: double.infinity,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                child: StyledButtonSmall(
                   text: "VALIDER COMMANDE",
                   onPressed: () => showCheckoutDialog(context),
-                  color: Colors.blue[600]!),
-            )
-          ],
+                  color: Colors.blue[600]!,
+                ),
+              );
+            }
+          },
         ),
       ),
     );

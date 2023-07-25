@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/order.dart';
+import 'package:stettlerproapp/data/dummy_data.dart';
 import 'package:stettlerproapp/widgets/order_data.dart';
 
 import '../providers/orders_provider.dart';
@@ -19,16 +20,28 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
   List<Order> filteredOrders = [];
   List<Order> orderList = [];
 
+
+  void initialList() {
+    for (final client in people) {
+      for (final order in client.orderList) {
+        ref.read(ordersProvider.notifier).addOrder(order);
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    orderList = ref.read(ordersProvider);
-    filteredOrders = orderList;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initialList();
+      orderList = ref.read(ordersProvider);
+      filteredOrders = orderList;
+    });
   }
 
   void _searchOrder(String query) {
     final suggestions = orderList.where((order) {
-      final name = order.client.name.toLowerCase();
+      final name = order.clientName.toLowerCase();
       final input = query.toLowerCase();
       return name.contains(input);
     }).toList();
@@ -42,7 +55,8 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-          title: "Mise à jour commandes AGIO", function: CustomAppBarFunction.drawer),
+          title: "Mise à jour commandes AGIO",
+          function: CustomAppBarFunction.drawer),
       drawer: const CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -93,9 +107,7 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
                 itemCount: filteredOrders.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {
-                    
-                    },
+                    onTap: () {},
                     child: OrderData(
                       order: filteredOrders[index],
                     ),
