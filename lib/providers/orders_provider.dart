@@ -4,6 +4,10 @@ import 'package:stettlerproapp/classes/order.dart';
 class OrdersNotifier extends StateNotifier<List<Order>> {
   OrdersNotifier() : super([]);
 
+  void setOrders(List<Order> orders){
+    state = orders;
+  }
+
   void addOrder(Order order) {
     state = [...state, order];
   }

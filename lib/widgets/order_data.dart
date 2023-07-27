@@ -3,13 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:stettlerproapp/classes/order.dart';
 import 'package:stettlerproapp/widgets/progress_indicator.dart';
 
-import '../classes/client.dart';
 
 class OrderData extends StatelessWidget {
   const OrderData({super.key, required this.order});
 
   final Order order;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class OrderData extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          order.isFinished
+          order.orderStatus == OrderStatus.pending
               ? Container(
                   width: 50,
                   height: 50,
@@ -106,7 +104,7 @@ class OrderData extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: order.isFinished
+            child: order.orderStatus == OrderStatus.pending
                 ? Container(
                     padding: const EdgeInsets.all(5),
                     child: Column(

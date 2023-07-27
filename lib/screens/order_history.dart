@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/order.dart';
 import 'package:stettlerproapp/data/dummy_data.dart';
+import 'package:stettlerproapp/screens/order_details.dart';
 import 'package:stettlerproapp/widgets/order_data.dart';
 
+import '../classes/product.dart';
 import '../providers/orders_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
@@ -20,24 +22,33 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
   List<Order> filteredOrders = [];
   List<Order> orderList = [];
 
-
-  void initialList() {
-    for (final client in people) {
-      for (final order in client.orderList) {
-        ref.read(ordersProvider.notifier).addOrder(order);
-      }
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      initialList();
-      orderList = ref.read(ordersProvider);
-      filteredOrders = orderList;
-    });
+    //WidgetsBinding.instance.addPostFrameCallback((_) { // every time you add an item to the cart it adds the initial items 
+      //initialList();
+      setState(() {
+        filteredOrders = orderList;
+      });
+    //});
   }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  /*void initialList() {
+    for (final client in people) {
+      for (final order in client.orderList) {
+        if (order.orderStatus == OrderStatus.pending) {
+          ref.read(ordersProvider.notifier).addOrder(order);
+        }
+      }
+    }
+    orderList = ref.read(ordersProvider);
+  }*/
 
   void _searchOrder(String query) {
     final suggestions = orderList.where((order) {
@@ -51,12 +62,23 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
     });
   }
 
+  double calculateTotalPrice(List<int> quantityList, List<Product> orderedItems) {
+  double totalPrice = quantityList.fold(0, (total, quantity) {
+    int index = quantityList.indexOf(quantity);
+    double price = orderedItems[index].price;
+    return total + (quantity * price);
+  });
+
+  return totalPrice;
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-          title: "Mise à jour commandes AGIO",
-          function: CustomAppBarFunction.drawer),
+        title: "Mise à jour commandes AGIO",
+        function: CustomAppBarFunction.drawer,
+      ),
       drawer: const CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -93,27 +115,44 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
               alignment: Alignment.bottomLeft,
               margin: const EdgeInsets.all(10),
               child: Text(
-                'Vos dernières commandes',
+                "Vos dernières commandes",
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
                     .copyWith(fontWeight: FontWeight.bold, fontSize: 14),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: filteredOrders.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {},
-                    child: OrderData(
-                      order: filteredOrders[index],
-                    ),
-                  );
-                },
-              ),
+            Consumer(
+              builder: (context, ref, child) {
+                final filteredOrders = ref.watch(ordersProvider);
+                return Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: filteredOrders.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => OrderDetails(
+                                cartItems: filteredOrders[index].orderedItems,
+                                quantityList: filteredOrders[index]
+                                    .orderedQuantity!,
+                                totalPrice: ValueNotifier<double>(calculateTotalPrice(filteredOrders[index]
+                                    .orderedQuantity!, filteredOrders[index].orderedItems))
+                              ),
+                            ),
+                          );
+                        },
+                        child: OrderData(
+                          order: filteredOrders[index],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),

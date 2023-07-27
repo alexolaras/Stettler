@@ -20,7 +20,6 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Widget content = const Scaffold(
       appBar: CustomAppBar(
         title: "Profil",
@@ -119,7 +118,14 @@ class Profile extends StatelessWidget {
                 ClientSettings(
                   icon: Icons.workspace_premium_outlined,
                   text: "Historique",
-                  onPressed: () {},
+                  onPressed: () {
+                    /*Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => (),
+                      ),
+                    );*/
+                  },
                 ),
                 ClientSettings(
                     icon: Icons.person_2_outlined,

@@ -17,8 +17,8 @@ import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/styled_button_small.dart';
 
-class ShoppingCart extends ConsumerStatefulWidget {
-  const ShoppingCart(
+class OrderDetails extends ConsumerStatefulWidget {
+  const OrderDetails(
       {super.key,
       required this.cartItems,
       required this.quantityList,
@@ -31,10 +31,10 @@ class ShoppingCart extends ConsumerStatefulWidget {
   final Client? client;
 
   @override
-  ConsumerState<ShoppingCart> createState() => _ShoppingCartState();
+  ConsumerState<OrderDetails> createState() => _OrderDetailsState();
 }
 
-class _ShoppingCartState extends ConsumerState<ShoppingCart> {
+class _OrderDetailsState extends ConsumerState<OrderDetails> {
   void updateCartItemQuantity(int index, int newQuantity, double newPrice) {
     setState(() {
       widget.quantityList[index] = newQuantity;
@@ -42,29 +42,26 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
     });
   }
 
-  void _addToOrderHistory() /*async*/{
+  void _updateOrderHistory() /*async*/ {
     final Order order = Order(
         orderNumber: _generateOrdercode(),
         clientName: widget.client!.name,
         clientSurname: widget.client!.surname,
         clientId: widget.client!.id,
         orderedItems: widget.cartItems,
-        orderedQuantity: widget.quantityList,
         orderStatus: OrderStatus.pending);
-      
-    /*var connectivityResult = await Connectivity().checkConnectivity();
+
+    /*final BuildContext currentContext = context;
+
+    var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
-      // There's no internet connection. You can handle the order differently here,
-      // like storing it locally and showing a message to the user.
-      // For example:
-      _storeOrderLocally(order);
-      _showNoInternetDialog(context);
+      // There's no internet connection.
     } else {
       ref.read(ordersProvider.notifier).addOrder(order);
-    }*/
+    } */
 
     ref.read(ordersProvider.notifier).addOrder(order);
-    
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => const Home(),
@@ -122,7 +119,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
                         .bodyMedium!
                         .copyWith(color: Colors.white)),
                 onPressed: () => widget.client != null
-                    ? _addToOrderHistory()
+                    ? _updateOrderHistory()
                     : showNoSelectedClientDialog(context)),
           )
         ],
@@ -197,7 +194,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: "Panier",
+        title: "Détails de la commande",
         function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
       ),

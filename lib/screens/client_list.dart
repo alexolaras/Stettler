@@ -103,9 +103,7 @@ class _ClientListState extends State<ClientList> {
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
                     child: ClientData(
-                      id: filteredClients[index].id,
-                      name: filteredClients[index].name,
-                      surname: filteredClients[index].surname,
+                      client: filteredClients[index]
                     ),
                   );
                 },
