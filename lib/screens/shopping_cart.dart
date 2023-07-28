@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
@@ -50,6 +49,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
         clientId: widget.client!.id,
         orderedItems: widget.cartItems,
         orderedQuantity: widget.quantityList,
+        isfinished: true,
         orderStatus: OrderStatus.pending);
       
     /*var connectivityResult = await Connectivity().checkConnectivity();
@@ -64,6 +64,10 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
     }*/
 
     ref.read(ordersProvider.notifier).addOrder(order);
+
+    widget.client!.cartProducts = [];
+    widget.client!.quantityList = [];
+    widget.client!.totalPrice = ValueNotifier<double>(0);
     
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -201,7 +205,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
         function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
+      bottomNavigationBar: BottomNavBar(client: widget.client!),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),

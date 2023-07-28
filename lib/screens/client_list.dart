@@ -39,6 +39,7 @@ class _ClientListState extends State<ClientList> {
 
     setState(() => filteredClients = suggestions);
   }
+  
 
   @override
   Widget build(BuildContext context) {

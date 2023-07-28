@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/screens/accounting.dart';
 import 'package:stettlerproapp/screens/general.dart';
@@ -8,15 +11,59 @@ import 'package:stettlerproapp/screens/sales.dart';
 import 'package:stettlerproapp/screens/delivery.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/client_settings.dart';
-import 'package:stettlerproapp/widgets/no_data.dart';
 
+import '../classes/order.dart';
+import '../providers/orders_provider.dart';
 import '../widgets/styled_button_small.dart';
 import 'discount.dart';
 
-class Profile extends StatelessWidget {
+
+class Profile extends ConsumerStatefulWidget {
   const Profile({super.key, required this.client});
 
   final List<Client> client;
+
+  @override
+  ProfileState createState() => ProfileState();
+}
+
+class ProfileState extends ConsumerState<Profile> {
+  void _addToOrderHistory() {
+    final Order order = Order(
+      orderNumber: _generateOrdercode(),
+      clientName: widget.client[0].name,
+      clientSurname: widget.client[0].surname,
+      clientId: widget.client[0].id,
+      orderedItems: widget.client[0].cartProducts,
+      orderedQuantity: widget.client[0].quantityList,
+      orderStatus: OrderStatus.pending,
+    );
+
+    ref.read(ordersProvider.notifier).addOrder(order);
+
+    widget.client[0].cartProducts = [];
+    widget.client[0].quantityList = [];
+    widget.client[0].totalPrice = ValueNotifier<double>(0);
+
+    print("the order was added");
+
+    /*Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => const Home(),
+      ),
+    );*/
+  }
+
+  String _generateOrdercode() {
+    final random = Random();
+    const availableChars = '1234567890';
+    final randomString = List.generate(
+      7,
+      (index) => availableChars[random.nextInt(availableChars.length)],
+    ).join();
+
+    return randomString;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +75,7 @@ class Profile extends StatelessWidget {
       body: Text("No people found"),
     );
 
-    if (client.isNotEmpty) {
+    if (widget.client.isNotEmpty) {
       content = SingleChildScrollView(
         child: Column(
           children: [
@@ -42,28 +89,28 @@ class Profile extends StatelessWidget {
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: client.length,
+                itemCount: widget.client.length,
                 itemBuilder: (ctx, index) => Row(
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${client[index].name} ${client[index].surname}',
+                        Text('${widget.client[index].name} ${widget.client[index].surname}',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge!
                                 .copyWith(fontSize: 20)),
                         Text(
-                          client[index].email,
+                          widget.client[index].email,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          client[index].phoneNumber,
+                          widget.client[index].phoneNumber,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Text(
-                          '${client[index].address.number} ${client[index].address.street} ${client[index].address.postalCode} ${client[index].address.city}',
+                          '${widget.client[index].address.number} ${widget.client[index].address.street} ${widget.client[index].address.postalCode} ${widget.client[index].address.city}',
                           style: Theme.of(context).textTheme.bodySmall,
                         )
                       ]
@@ -134,7 +181,7 @@ class Profile extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => General(client: client[0]),
+                          builder: (context) => General(client: widget.client[0]),
                         ),
                       );
                     }),
@@ -145,7 +192,7 @@ class Profile extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Accounting(client: client[0]),
+                          builder: (context) => Accounting(client: widget.client[0]),
                         ),
                       );
                     }),
@@ -153,77 +200,45 @@ class Profile extends StatelessWidget {
                     icon: Icons.crop_original_rounded,
                     text: "Ventes",
                     onPressed: () {
-                      if (client[0].purchaseInfo != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Sales(client: client[0]),
-                          ),
-                        );
-                      } else {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => const NoData(page: 'sales'),
-                          ),
-                        );
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Sales(client: widget.client[0]),
+                        ),
+                      );
                     }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Rabais",
                     onPressed: () {
-                      if (client[0].purchaseInfo != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Discount(client: client[0]),
-                          ),
-                        );
-                      } else {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => const NoData(page: 'discount'),
-                          ),
-                        );
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Discount(client: widget.client[0]),
+                        ),
+                      );
                     }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Tournées",
                     onPressed: () {
-                      if (client[0].purchaseInfo != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Delivery(client: client[0]),
-                          ),
-                        );
-                      } else {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => const NoData(page: 'delivery'),
-                          ),
-                        );
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Delivery(client: widget.client[0]),
+                        ),
+                      );
                     }),
                 ClientSettings(
                     icon: Icons.crop_original_rounded,
                     text: "Remarques",
                     onPressed: () {
-                      if (client[0].purchaseInfo != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Remarks(client: client[0]),
-                          ),
-                        );
-                      } else {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => const NoData(page: 'remarks'),
-                          ),
-                        );
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Remarks(client: widget.client[0]),
+                        ),
+                      );
                     }),
               ],
             ),
@@ -235,7 +250,7 @@ class Profile extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (ctx) => ProductList(client: client[0]),
+                        builder: (ctx) => ProductList(client: widget.client[0]),
                       ),
                     );
                   },
@@ -247,9 +262,10 @@ class Profile extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Profil",
         function: CustomAppBarFunction.back,
+        saveUnfinishedOrder: _addToOrderHistory,
       ),
       body: content,
     );

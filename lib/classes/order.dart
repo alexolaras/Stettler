@@ -1,8 +1,8 @@
-import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/classes/product.dart';
 
 
 enum OrderStatus {
+
   pending,
   processing,
   sent,
@@ -17,6 +17,7 @@ class Order {
   List<Product> orderedItems;
   List<int>? orderedQuantity;
   final OrderStatus orderStatus;
+  final bool isfinished;
 
   Order({
     DateTime? orderDate,
@@ -27,5 +28,6 @@ class Order {
     required this.orderedItems,
     this.orderedQuantity,
     required this.orderStatus,
-  })  : orderDate = orderDate ?? DateTime.now();
+    bool? isfinished,
+  })  : orderDate = orderDate ?? DateTime.now(), isfinished = isfinished ?? false;
 }

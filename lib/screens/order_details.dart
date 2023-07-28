@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
@@ -198,7 +197,7 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
         function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
+      //bottomNavigationBar: const BottomNavBar(),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),

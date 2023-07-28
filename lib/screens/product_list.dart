@@ -4,7 +4,6 @@ import 'package:stettlerproapp/data/dummy_products.dart';
 import 'package:stettlerproapp/screens/product_details.dart';
 import 'package:stettlerproapp/screens/shopping_cart.dart';
 
-import '../classes/order.dart';
 import '../classes/product.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
@@ -25,10 +24,7 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   final TextEditingController _searchController = TextEditingController();
   List<Product> filteredProducts = products;
-  List<Product> cartProducts = [];
   final ValueNotifier<int> quantity = ValueNotifier<int>(1);
-  List<int> quantityList = [];
-  final ValueNotifier<double> totalPrice = ValueNotifier<double>(0);
 
 
   void _selectProduct(BuildContext context, String id) {
@@ -39,10 +35,10 @@ class _ProductListState extends State<ProductList> {
       MaterialPageRoute(
         builder: (ctx) => ProductDetails(
           product: singleProduct,
-          cartProducts: cartProducts,
+          cartProducts: widget.client!.cartProducts,
           quantity: quantity,
-          quantityList: quantityList,
-          totalPrice: totalPrice,
+          quantityList: widget.client!.quantityList,
+          totalPrice: widget.client!.totalPrice,
         ),
       ),
     );
@@ -64,9 +60,9 @@ class _ProductListState extends State<ProductList> {
       context,
       MaterialPageRoute(
         builder: (ctx) => ShoppingCart(
-          cartItems: cartProducts,
-          quantityList: quantityList,
-          totalPrice: totalPrice,
+          cartItems: widget.client!.cartProducts,
+          quantityList: widget.client!.quantityList,
+          totalPrice: widget.client!.totalPrice,
           client: widget.client,
         ),
       ),

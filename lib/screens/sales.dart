@@ -35,17 +35,17 @@ class _SalesState extends State<Sales> {
   @override
   void initState() {
     super.initState();
-    _registrantSell = widget.client.purchaseInfo!.registrantSell;
-    _purchaseDate = widget.client.purchaseInfo!.purchaseDate.toUtc();
-    _registrantReturn = widget.client.purchaseInfo!.registrantReturn;
-    _returnDate = widget.client.purchaseInfo!.returnDate?.toUtc();
-    _discount = widget.client.purchaseInfo!.discount;
-    _discountInvoice = widget.client.purchaseInfo!.discountInvoice;
-    _priceCategory = widget.client.purchaseInfo!.priceCategory;
+    _registrantSell = widget.client.purchaseInfo.registrantSell;
+    _purchaseDate = widget.client.purchaseInfo.purchaseDate.toUtc();
+    _registrantReturn = widget.client.purchaseInfo.registrantReturn;
+    _returnDate = widget.client.purchaseInfo.returnDate?.toUtc();
+    _discount = widget.client.purchaseInfo.discount;
+    _discountInvoice = widget.client.purchaseInfo.discountInvoice;
+    _priceCategory = widget.client.purchaseInfo.priceCategory;
     _startDeliveryHour =
-        DateFormat.Hm().format(widget.client.purchaseInfo!.startDeliveryHour);
+        DateFormat.Hm().format(widget.client.purchaseInfo.startDeliveryHour);
     _endDeliveryHour =
-        DateFormat.Hm().format(widget.client.purchaseInfo!.endDeliveryHour);
+        DateFormat.Hm().format(widget.client.purchaseInfo.endDeliveryHour);
   }
 
   @override

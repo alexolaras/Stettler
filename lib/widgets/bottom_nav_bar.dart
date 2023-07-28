@@ -1,75 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:stettlerproapp/screens/home.dart';
+import 'package:stettlerproapp/screens/product_list.dart';
+import 'package:stettlerproapp/screens/profile.dart';
+import 'package:stettlerproapp/screens/shopping_cart.dart';
 
-class CustomBottomNavBar extends StatefulWidget {
-  const CustomBottomNavBar({Key? key}) : super(key: key);
+import '../classes/client.dart';
+
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key, required this.client});
+
+  final Client client;
 
   @override
-  _CustomBottomNavBarState createState() => _CustomBottomNavBarState();
+  BottomNavBarState createState() => BottomNavBarState();
 }
 
-class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
-  int _selectedIndex = 0;
+class BottomNavBarState extends State<BottomNavBar> {
+  int _selectedIndex = 2;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    // Add navigation logic based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const Home()));
+        break;
+      case 1:
+        Navigator.of(context).pop();
+        break;
+      case 2:
+        //Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const ShoppingCart()));
+        break;
+      case 3:
+        //Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => )));
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.zero,
-      height: 70,
-      decoration: const BoxDecoration(color: Colors.white),
-      child: BottomAppBar(
-        color: Colors.transparent,
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          height: 70,
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              buildNavItem(Icons.home_outlined, 0, size: 30),
-              buildNavItem(Icons.search, 1, size: 30),
-              buildNavItem(Icons.shopping_bag_outlined, 2, size: 30),
-              buildNavItem(Icons.person_outline, 3, size: 30),
-            ],
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              color: Color.fromARGB(255, 165, 165, 165),
+            ),
+            label: '',
+            
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildNavItem(IconData icon, int index, {double size = 24}) {
-    final isSelected = _selectedIndex == index;
-    final color = isSelected ? Colors.black : Colors.white.withOpacity(.60);
-
-    return Expanded(
-      child: SizedBox(
-        height: kBottomNavigationBarHeight,
-        child: GestureDetector(
-          onTap: () => _onItemTapped(index),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (isSelected)
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 2,
-                    width: 10,
-                    color: Colors.black,
-                  ),
-                ),
-              Icon(icon, color: color, size: size),
-            ],
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              color: Color.fromARGB(255, 165, 165, 165),
+            ),
+            label: '',
           ),
-        ),
-      ),
-    );
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_bag_outlined,
+              color: Color.fromARGB(255, 165, 165, 165),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_outline,
+              color: Color.fromARGB(255, 165, 165, 165),
+            ),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.black,
+        iconSize: 30,
+        onTap: _onItemTapped,
+        );
   }
 }

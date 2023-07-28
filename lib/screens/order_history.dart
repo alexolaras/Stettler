@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/order.dart';
-import 'package:stettlerproapp/data/dummy_data.dart';
 import 'package:stettlerproapp/screens/order_details.dart';
 import 'package:stettlerproapp/widgets/order_data.dart';
 

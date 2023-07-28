@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/client.dart';
-import 'package:stettlerproapp/classes/order.dart';
+
 
 class ClientData extends StatelessWidget {
   const ClientData({super.key, required this.client});

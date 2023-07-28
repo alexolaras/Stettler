@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:stettlerproapp/classes/product.dart';
+
 import 'order.dart';
 
 final List<String> billingPeriod = [
@@ -59,20 +62,20 @@ class AccountingInfo {
     required this.refunds,
   });
 }
-class Transportation{
+
+class Transportation {
   String transportationNumber;
   String transportationCode;
   DateTime transportationDate;
   String transportationSEQ;
   String sellerCode;
 
-  Transportation({
-    required this.transportationNumber,
-    required this.transportationCode,
-    required this.transportationDate,
-    required this.transportationSEQ,
-    required this.sellerCode
-  });
+  Transportation(
+      {required this.transportationNumber,
+      required this.transportationCode,
+      required this.transportationDate,
+      required this.transportationSEQ,
+      required this.sellerCode});
 }
 
 class PurchaseInfo {
@@ -109,7 +112,6 @@ class PurchaseInfo {
   });
 }
 
-
 class Client {
   String name;
   String surname;
@@ -123,19 +125,27 @@ class Client {
   AccountingInfo accountingInfo;
   PurchaseInfo purchaseInfo;
   List<Order> orderList;
+  List<Product> cartProducts;
+  List<int> quantityList;
+  ValueNotifier<double> totalPrice;
 
-  Client({
-    required this.name,
-    required this.surname,
-    required this.id,
-    required this.email,
-    required this.address,
-    required this.phoneNumber,
-    required this.language,
-    this.companyName = '',
-    required this.gender,
-    required this.accountingInfo,
-    required this.purchaseInfo,
-    required this.orderList
-  });
+  Client(
+      {required this.name,
+      required this.surname,
+      required this.id,
+      required this.email,
+      required this.address,
+      required this.phoneNumber,
+      required this.language,
+      this.companyName = '',
+      required this.gender,
+      required this.accountingInfo,
+      required this.purchaseInfo,
+      required this.orderList,
+      List<Product>? cartProducts,
+      List<int>? quantityList,
+      ValueNotifier<double>? totalPrice})
+      : cartProducts = cartProducts ?? [],
+        quantityList = quantityList ?? [],
+        totalPrice = totalPrice ?? ValueNotifier<double>(0);
 }

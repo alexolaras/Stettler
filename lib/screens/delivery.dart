@@ -27,14 +27,14 @@ class _DeliveryState extends State<Delivery> {
   void initState() {
     super.initState();
     _transportationNumber =
-        widget.client.purchaseInfo!.transportation.transportationNumber;
+        widget.client.purchaseInfo.transportation.transportationNumber;
     _transportationCode =
-        widget.client.purchaseInfo!.transportation.transportationCode;
+        widget.client.purchaseInfo.transportation.transportationCode;
     _transportationDate =
-        widget.client.purchaseInfo!.transportation.transportationDate.toUtc();
+        widget.client.purchaseInfo.transportation.transportationDate.toUtc();
     _transportationSEQ =
-        widget.client.purchaseInfo!.transportation.transportationSEQ;
-    _sellerCode = widget.client.purchaseInfo!.transportation.sellerCode;
+        widget.client.purchaseInfo.transportation.transportationSEQ;
+    _sellerCode = widget.client.purchaseInfo.transportation.sellerCode;
   }
 
   @override

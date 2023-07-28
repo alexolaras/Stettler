@@ -20,7 +20,7 @@ class _DiscountState extends State<Discount> {
   @override
   void initState() {
     super.initState();
-    _clientDiscount = widget.client.purchaseInfo!.discount;  }
+    _clientDiscount = widget.client.purchaseInfo.discount;  }
 
   @override
   Widget build(BuildContext context) {

@@ -23,8 +23,8 @@ class _RemarksState extends State<Remarks> {
   @override
   void initState() {
     super.initState();
-    _remarksDelivery = widget.client.purchaseInfo!.remarksDelivery;
-    _remarksPhone = widget.client.purchaseInfo!.remarksPhone;
+    _remarksDelivery = widget.client.purchaseInfo.remarksDelivery;
+    _remarksPhone = widget.client.purchaseInfo.remarksPhone;
   }
 
   @override

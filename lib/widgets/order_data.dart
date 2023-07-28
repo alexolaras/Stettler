@@ -22,7 +22,7 @@ class OrderData extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          order.orderStatus == OrderStatus.pending
+          order.isfinished
               ? Container(
                   width: 50,
                   height: 50,

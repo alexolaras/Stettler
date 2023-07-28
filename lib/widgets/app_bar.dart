@@ -12,12 +12,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.function,
     this.additionalIcon,
     this.additionalFunction,
+    this.saveUnfinishedOrder,
   });
 
   final String title;
   final CustomAppBarFunction function;
   final IconData? additionalIcon;
   final Function()? additionalFunction;
+  final Function()? saveUnfinishedOrder;
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -41,9 +43,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 : const Icon(Icons.menu),
             color: Colors.black,
             onPressed: () {
-              function == CustomAppBarFunction.drawer
-                  ? Scaffold.of(context).openDrawer()
-                  : Navigator.pop(context);
+              if (function == CustomAppBarFunction.drawer) {
+                Scaffold.of(context).openDrawer();
+              } else {
+                saveUnfinishedOrder?.call();
+                Navigator.pop(context);
+              }
             },
           ),
         ),
