@@ -1,14 +1,11 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/screens/client_list.dart';
-import 'package:stettlerproapp/screens/home.dart';
 import 'package:stettlerproapp/widgets/bottom_nav_bar.dart';
 import 'package:stettlerproapp/widgets/cart_item.dart';
 import 'package:stettlerproapp/widgets/checkout_total.dart';
-import 'package:stettlerproapp/providers/orders_provider.dart';
 
 import '../classes/order.dart';
 import '../classes/product.dart';
@@ -22,12 +19,12 @@ class OrderDetails extends ConsumerStatefulWidget {
       required this.cartItems,
       required this.quantityList,
       required this.totalPrice,
-      this.client});
+      required this.client});
 
   final List<Product> cartItems;
   final List<int> quantityList;
   final ValueNotifier<double> totalPrice;
-  final Client? client;
+  final Client client;
 
   @override
   ConsumerState<OrderDetails> createState() => _OrderDetailsState();
@@ -41,42 +38,13 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
     });
   }
 
-  void _updateOrderHistory() /*async*/ {
-    final Order order = Order(
-        orderNumber: _generateOrdercode(),
-        clientName: widget.client!.name,
-        clientSurname: widget.client!.surname,
-        clientId: widget.client!.id,
-        orderedItems: widget.cartItems,
-        orderStatus: OrderStatus.pending);
+  void _updateOrderHistory(Order order) /*async*/ {
+    //order.orderedItems = orderedItems;
+    //order.orderedQuantity = orderedQuantity;
 
-    /*final BuildContext currentContext = context;
-
-    var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      // There's no internet connection.
-    } else {
-      ref.read(ordersProvider.notifier).addOrder(order);
-    } */
-
-    ref.read(ordersProvider.notifier).addOrder(order);
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => const Home(),
-      ),
-    );
   }
 
-  String _generateOrdercode() {
-    final random = Random();
-    const availableChars = '1234567890';
-    final randomString = List.generate(
-            7, (index) => availableChars[random.nextInt(availableChars.length)])
-        .join();
-
-    return randomString;
-  }
+  
 
   showCheckoutDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -117,9 +85,11 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
                         .textTheme
                         .bodyMedium!
                         .copyWith(color: Colors.white)),
-                onPressed: () => widget.client != null
-                    ? _updateOrderHistory()
-                    : showNoSelectedClientDialog(context)),
+                onPressed:(){
+                  print("update order history");
+                }
+                     //_updateOrderHistory()
+),
           )
         ],
       ),
@@ -197,7 +167,7 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
         function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
       ),
-      //bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(client: widget.client,),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),

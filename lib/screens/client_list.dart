@@ -18,7 +18,7 @@ class _ClientListState extends State<ClientList> {
   List<Client> filteredClients = people;
 
   void _selectPerson(BuildContext context, String id) {
-    final singlePerson = people.where((person) => person.id == id).toList();
+    final singlePerson = people.firstWhere((person) => person.id == id);
     Navigator.push(
       context,
       MaterialPageRoute(

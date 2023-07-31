@@ -22,12 +22,12 @@ class ShoppingCart extends ConsumerStatefulWidget {
       required this.cartItems,
       required this.quantityList,
       required this.totalPrice,
-      this.client});
+      required this.client});
 
   final List<Product> cartItems;
   final List<int> quantityList;
   final ValueNotifier<double> totalPrice;
-  final Client? client;
+  final Client client;
 
   @override
   ConsumerState<ShoppingCart> createState() => _ShoppingCartState();
@@ -41,17 +41,17 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
     });
   }
 
-  void _addToOrderHistory() /*async*/{
+  void _addToOrderHistory() /*async*/ {
     final Order order = Order(
         orderNumber: _generateOrdercode(),
-        clientName: widget.client!.name,
-        clientSurname: widget.client!.surname,
-        clientId: widget.client!.id,
+        clientName: widget.client.name,
+        clientSurname: widget.client.surname,
+        clientId: widget.client.id,
         orderedItems: widget.cartItems,
         orderedQuantity: widget.quantityList,
         isfinished: true,
         orderStatus: OrderStatus.pending);
-      
+
     /*var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       // There's no internet connection. You can handle the order differently here,
@@ -65,10 +65,10 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
 
     ref.read(ordersProvider.notifier).addOrder(order);
 
-    widget.client!.cartProducts = [];
-    widget.client!.quantityList = [];
-    widget.client!.totalPrice = ValueNotifier<double>(0);
-    
+    widget.client.cartProducts = [];
+    widget.client.quantityList = [];
+    widget.client.totalPrice = ValueNotifier<double>(0);
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => const Home(),
@@ -125,9 +125,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
                         .textTheme
                         .bodyMedium!
                         .copyWith(color: Colors.white)),
-                onPressed: () => widget.client != null
-                    ? _addToOrderHistory()
-                    : showNoSelectedClientDialog(context)),
+                onPressed: () => _addToOrderHistory()),
           )
         ],
       ),
@@ -205,7 +203,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
         function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
       ),
-      bottomNavigationBar: BottomNavBar(client: widget.client!),
+      bottomNavigationBar: BottomNavBar(client: widget.client,),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),

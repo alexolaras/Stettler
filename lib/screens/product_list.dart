@@ -56,6 +56,7 @@ class _ProductListState extends State<ProductList> {
   }
 
   void _openCart(){
+    widget.client != null ?
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -63,9 +64,64 @@ class _ProductListState extends State<ProductList> {
           cartItems: widget.client!.cartProducts,
           quantityList: widget.client!.quantityList,
           totalPrice: widget.client!.totalPrice,
-          client: widget.client,
+          client: widget.client!,
         ),
       ),
+    ) : showNoSelectedClientDialog(context);
+  }
+
+  showNoSelectedClientDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      title: Center(
+          child: Text(
+        'Pas de client sélectionné',
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge!
+            .copyWith(fontWeight: FontWeight.bold),
+      )),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            child: Text(
+              "Veuillez revenir en arrière et sélectionner un client",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromARGB(255, 100, 101, 116),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Container(
+            width: 120,
+            height: 40,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: const Color.fromARGB(255, 44, 213, 111)),
+            alignment: Alignment.center,
+            padding: EdgeInsets.zero,
+            child: TextButton(
+              child: Text("CONFIRMER",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }
+            ),
+          )
+        ],
+      ),
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 

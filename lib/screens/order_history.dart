@@ -5,6 +5,7 @@ import 'package:stettlerproapp/screens/order_details.dart';
 import 'package:stettlerproapp/widgets/order_data.dart';
 
 import '../classes/product.dart';
+import '../data/dummy_data.dart';
 import '../providers/orders_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
@@ -71,6 +72,7 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
   return totalPrice;
 }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,6 +137,7 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (ctx) => OrderDetails(
+                                client: people.firstWhere((person) => person.id == filteredOrders[index].clientId),
                                 cartItems: filteredOrders[index].orderedItems,
                                 quantityList: filteredOrders[index]
                                     .orderedQuantity!,
