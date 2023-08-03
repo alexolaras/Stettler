@@ -17,7 +17,7 @@ class Order {
   List<Product> orderedItems;
   List<int>? orderedQuantity;
   final OrderStatus orderStatus;
-  final bool isfinished;
+  bool isFinished;
 
   Order({
     DateTime? orderDate,
@@ -28,6 +28,6 @@ class Order {
     required this.orderedItems,
     this.orderedQuantity,
     required this.orderStatus,
-    bool? isfinished,
-  })  : orderDate = orderDate ?? DateTime.now(), isfinished = isfinished ?? false;
+    bool? isFinished,
+  })  : orderDate = orderDate ?? DateTime.now(), isFinished = isFinished ?? false;
 }

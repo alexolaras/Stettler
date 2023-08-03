@@ -7,12 +7,14 @@ class QuantityCart extends StatefulWidget {
       required this.product,
       required this.quantity,
       required this.totalPrice,
-      required this.updateQuantityCallback});
+      required this.updateQuantityCallback,
+      required this.isFinished});
 
   final Product product;
   double totalPrice;
   int quantity;
   final Function(int, double) updateQuantityCallback;
+  final bool isFinished;
 
   @override
   State<StatefulWidget> createState() {
@@ -22,7 +24,7 @@ class QuantityCart extends StatefulWidget {
 
 class _QuantityCartState extends State<QuantityCart> {
   void _decreaseQuantity() {
-    if (widget.quantity > 1) {
+    if (widget.quantity > 1 && !widget.isFinished) {
       setState(() {
         widget.updateQuantityCallback(
             --widget.quantity, widget.totalPrice - widget.product.price);
@@ -31,7 +33,7 @@ class _QuantityCartState extends State<QuantityCart> {
   }
 
   void _increaseQuantity() {
-    if (widget.quantity < widget.product.quantity) {
+    if (widget.quantity < widget.product.quantity && !widget.isFinished) {
       setState(() {
         widget.updateQuantityCallback(
             ++widget.quantity, widget.totalPrice + widget.product.price);

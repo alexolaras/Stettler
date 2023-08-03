@@ -9,12 +9,14 @@ class CartItem extends StatefulWidget {
       required this.cartItem,
       required this.quantity,
       required this.totalPrice,
-      required this.updateQuantityCallback});
+      required this.updateQuantityCallback,
+      required this.isFinished});
 
   final Product cartItem;
   final int quantity;
   final double totalPrice;
   final Function(int, double) updateQuantityCallback;
+  final bool isFinished;
 
   @override
   State<StatefulWidget> createState() {
@@ -84,6 +86,7 @@ class _CartItemState extends State<CartItem> {
                       quantity: widget.quantity,
                       totalPrice: widget.totalPrice,
                       updateQuantityCallback: widget.updateQuantityCallback,
+                      isFinished: widget.isFinished
                     ),
                   ],
                 ),

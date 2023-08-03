@@ -5,37 +5,40 @@ import 'package:stettlerproapp/widgets/quantity.dart';
 import 'package:stettlerproapp/widgets/styled_button.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails(
-      {super.key,
-      required this.product,
-      required this.cartProducts,
-      required this.quantity,
-      required this.quantityList,
-      required this.totalPrice,
-      });
+  const ProductDetails({
+    super.key,
+    required this.product,
+    required this.cartProducts,
+    required this.quantity,
+    required this.quantityList,
+    required this.totalPrice,
+  });
 
-  final List<Product> product;
-  final List<Product> cartProducts;
+  final Product product;
+  final List<Product>? cartProducts;
   final ValueNotifier<int> quantity;
-  final List<int> quantityList;
-  final ValueNotifier<double> totalPrice;
+  final List<int>? quantityList;
+  final ValueNotifier<double>? totalPrice;
 
-void _addToCart(context) {
-  int index = cartProducts.indexWhere((item) => item == product[0]);
+  void _addToCart(context) {
+    int index = cartProducts!.indexWhere((item) => item == product);
 
-  if (index >= 0) {
-    quantityList[index] += quantity.value;
-    totalPrice.value += product[0].price * quantity.value;
-  } else {
-    cartProducts.add(product[0]);
-    quantityList.add(quantity.value);
-    totalPrice.value += product[0].price * quantity.value;
+      
+
+    if (index >= 0) {
+      quantityList![index] += quantity.value;
+      totalPrice!.value += product.price * quantity.value;
+    } else {
+      cartProducts!.add(product);
+      quantityList!.add(quantity.value);
+      totalPrice!.value += product.price * quantity.value;
+    }
+
+    quantity.value = 1;
+
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
-
-  quantity.value = 1;
-
-  Navigator.of(context).pop();
-}
 
   showAlertDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -157,96 +160,87 @@ void _addToCart(context) {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: product.length,
-              itemBuilder: (ctx, index) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(15),
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product[index].name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                            softWrap: false,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            'REF : ${product[index].id}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                  color:
-                                      const Color.fromARGB(150, 124, 125, 129),
-                                  fontSize: 12,
-                                ),
-                          ),
-                          Text(
-                            'La boîte', // product[index].packaging,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                  color:
-                                      const Color.fromARGB(150, 124, 125, 129),
-                                  fontSize: 12,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            '${product[index].price.toStringAsFixed(2)} CHF',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(fontSize: 20),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: const Color.fromARGB(255, 73, 139, 240),
-                            ),
-                            margin: const EdgeInsets.all(5),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 2, vertical: 5),
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Stock : ${product[index].quantity.toString()}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(15),
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          style:
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                          softWrap: false,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          'REF : ${product.id}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                color: const Color.fromARGB(150, 124, 125, 129),
+                                fontSize: 12,
                               ),
+                        ),
+                        Text(
+                          'La boîte', // product[index].packaging,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                color: const Color.fromARGB(150, 124, 125, 129),
+                                fontSize: 12,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          '${product.price.toStringAsFixed(2)} CHF',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(fontSize: 20),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: const Color.fromARGB(255, 73, 139, 240),
+                          ),
+                          margin: const EdgeInsets.all(5),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 2, vertical: 5),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Stock : ${product.quantity.toString()}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -256,9 +250,9 @@ void _addToCart(context) {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Hero(
-                  tag: product[0].id,
+                  tag: product.id,
                   child: Image.network(
-                    product[0].image,
+                    product.image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -275,18 +269,18 @@ void _addToCart(context) {
               margin: const EdgeInsets.all(15),
               padding: const EdgeInsets.all(15),
               child: Text(
-                product[0].ingredients,
+                product.ingredients,
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: const Color.fromARGB(150, 124, 125, 129),
                       fontSize: 12,
                     ),
               ),
             ),
-            Quantity(
-              product: product[0],
+            cartProducts == null? Container() :Quantity(
+              product: product,
               quantity: quantity,
             ),
-            Container(
+            cartProducts == null? Container() : Container(
               padding: const EdgeInsets.all(15),
               child: StyledButton(
                 text: 'Mettre à jour quantité',

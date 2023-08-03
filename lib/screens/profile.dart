@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/screens/accounting.dart';
+import 'package:stettlerproapp/screens/client_orders.dart';
 import 'package:stettlerproapp/screens/general.dart';
 import 'package:stettlerproapp/screens/product_list.dart';
 import 'package:stettlerproapp/screens/remarks.dart';
@@ -13,6 +14,7 @@ import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/client_settings.dart';
 
 import '../classes/order.dart';
+import '../classes/product.dart';
 import '../providers/orders_provider.dart';
 import '../widgets/styled_button_small.dart';
 import 'discount.dart';
@@ -27,6 +29,14 @@ class Profile extends ConsumerStatefulWidget {
 }
 
 class ProfileState extends ConsumerState<Profile> {
+  int productListCount = 0;
+
+  @override
+  void initState() {
+    productListCount = widget.client.cartProducts.length;
+    super.initState();
+  }
+
   void _addToOrderHistory() {
     final Order order = Order(
       orderNumber: _generateOrdercode(),
@@ -39,6 +49,8 @@ class ProfileState extends ConsumerState<Profile> {
     );
 
     ref.read(ordersProvider.notifier).addOrder(order);
+    widget.client.orderList.add(order);
+    print("order was added");
 
     widget.client.cartProducts = [];
     widget.client.quantityList = [];
@@ -162,12 +174,14 @@ class ProfileState extends ConsumerState<Profile> {
                 icon: Icons.workspace_premium_outlined,
                 text: "Historique",
                 onPressed: () {
-                  /*Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (ctx) => (),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => ClientOrders(
+                        client: widget.client,
                       ),
-                    );*/
+                    ),
+                  );
                 },
               ),
               ClientSettings(
@@ -257,11 +271,10 @@ class ProfileState extends ConsumerState<Profile> {
     );
 
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Profil",
         function: CustomAppBarFunction.back,
-        saveUnfinishedOrder:
-            widget.client.cartProducts.isNotEmpty ? _addToOrderHistory : () {},
+        //saveUnfinishedOrder: _addToOrderHistory /*productListCount > 0 ? _addToOrderHistory : null,*/
       ),
       body: content,
     );

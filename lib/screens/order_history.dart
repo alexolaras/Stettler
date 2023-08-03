@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/order.dart';
 import 'package:stettlerproapp/screens/order_details.dart';
+import 'package:stettlerproapp/screens/shopping_cart.dart';
 import 'package:stettlerproapp/widgets/order_data.dart';
 
 import '../classes/product.dart';
@@ -61,16 +62,18 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
       filteredOrders = suggestions;
     });
   }
+  
+double calculateTotalPrice(List<int> quantityList, List<Product> orderedItems) {
+  double totalPrice = 0;
 
-  double calculateTotalPrice(List<int> quantityList, List<Product> orderedItems) {
-  double totalPrice = quantityList.fold(0, (total, quantity) {
-    int index = quantityList.indexOf(quantity);
-    double price = orderedItems[index].price;
-    return total + (quantity * price);
-  });
+  for (int i = 0; i < quantityList.length; i++) {
+    double price = orderedItems[i].price;
+    totalPrice += quantityList[i] * price;
+  }
 
   return totalPrice;
 }
+
 
 
   @override
@@ -137,12 +140,14 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (ctx) => OrderDetails(
+                                order: filteredOrders[index],
                                 client: people.firstWhere((person) => person.id == filteredOrders[index].clientId),
                                 cartItems: filteredOrders[index].orderedItems,
                                 quantityList: filteredOrders[index]
                                     .orderedQuantity!,
                                 totalPrice: ValueNotifier<double>(calculateTotalPrice(filteredOrders[index]
-                                    .orderedQuantity!, filteredOrders[index].orderedItems))
+                                    .orderedQuantity!, filteredOrders[index].orderedItems)),
+                                
                               ),
                             ),
                           );

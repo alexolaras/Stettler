@@ -22,7 +22,7 @@ class OrderData extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          order.isfinished
+          order.isFinished
               ? Container(
                   width: 50,
                   height: 50,

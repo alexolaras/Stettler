@@ -11,6 +11,13 @@ class OrdersNotifier extends StateNotifier<List<Order>> {
   void addOrder(Order order) {
     state = [...state, order];
   }
+
+  void updateOrder(Order updatedOrder) {
+    state = [
+      for (var order in state)
+        if (order.orderNumber == updatedOrder.orderNumber) updatedOrder else order,
+    ];
+  }
 }
 
 final ordersProvider =

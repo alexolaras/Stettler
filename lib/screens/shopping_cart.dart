@@ -34,25 +34,48 @@ class ShoppingCart extends ConsumerStatefulWidget {
 }
 
 class _ShoppingCartState extends ConsumerState<ShoppingCart> {
+  List<Product> productListCopy = [];
+  int _selectedItemIndex = -1;
+
+  void removeItemFromCart() {
+    if (_selectedItemIndex >= 0 &&
+        _selectedItemIndex < widget.cartItems.length) {
+      setState(() {
+        final removedProduct = widget.cartItems[_selectedItemIndex];
+        final removedQuantity = widget.quantityList[_selectedItemIndex];
+
+        widget.totalPrice.value -= removedProduct.price * removedQuantity;
+
+        widget.cartItems.removeAt(_selectedItemIndex);
+        widget.quantityList.removeAt(_selectedItemIndex);
+
+        _selectedItemIndex = -1;
+      });
+    }
+  }
+
   void updateCartItemQuantity(int index, int newQuantity, double newPrice) {
     setState(() {
+      widget.totalPrice.value -=
+          widget.cartItems[index].price * widget.quantityList[index];
       widget.quantityList[index] = newQuantity;
       widget.totalPrice.value = newPrice;
     });
   }
 
   void _addToOrderHistory() /*async*/ {
-    final Order order = Order(
-        orderNumber: _generateOrdercode(),
-        clientName: widget.client.name,
-        clientSurname: widget.client.surname,
-        clientId: widget.client.id,
-        orderedItems: widget.cartItems,
-        orderedQuantity: widget.quantityList,
-        isfinished: true,
-        orderStatus: OrderStatus.pending);
+    if (widget.cartItems.isNotEmpty) {
+      final Order order = Order(
+          orderNumber: _generateOrdercode(),
+          clientName: widget.client.name,
+          clientSurname: widget.client.surname,
+          clientId: widget.client.id,
+          orderedItems: widget.cartItems,
+          orderedQuantity: widget.quantityList,
+          isFinished: true,
+          orderStatus: OrderStatus.pending);
 
-    /*var connectivityResult = await Connectivity().checkConnectivity();
+      /*var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       // There's no internet connection. You can handle the order differently here,
       // like storing it locally and showing a message to the user.
@@ -63,11 +86,13 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
       ref.read(ordersProvider.notifier).addOrder(order);
     }*/
 
-    ref.read(ordersProvider.notifier).addOrder(order);
+      ref.read(ordersProvider.notifier).addOrder(order);
+      widget.client.orderList.add(order);
 
-    widget.client.cartProducts = [];
-    widget.client.quantityList = [];
-    widget.client.totalPrice = ValueNotifier<double>(0);
+      widget.client.cartProducts = [];
+      widget.client.quantityList = [];
+      widget.client.totalPrice = ValueNotifier<double>(0);
+    }
 
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -198,12 +223,15 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Panier",
         function: CustomAppBarFunction.back,
         additionalIcon: Icons.delete,
+        additionalFunction: removeItemFromCart,
       ),
-      bottomNavigationBar: BottomNavBar(client: widget.client,),
+      bottomNavigationBar: BottomNavBar(
+        client: widget.client,
+      ),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -213,7 +241,11 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
           itemBuilder: (context, index) {
             if (index < widget.quantityList.length) {
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    _selectedItemIndex = index;
+                  });
+                },
                 child: CartItem(
                   cartItem: widget.cartItems[index],
                   quantity: widget.quantityList[index],
@@ -221,6 +253,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
                   updateQuantityCallback: (newQuantity, newPrice) {
                     updateCartItemQuantity(index, newQuantity, newPrice);
                   },
+                  isFinished: false,
                 ),
               );
             } else if (index == widget.quantityList.length) {

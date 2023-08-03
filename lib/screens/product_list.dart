@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:stettlerproapp/classes/client.dart';
 import 'package:stettlerproapp/data/dummy_products.dart';
+import 'package:stettlerproapp/screens/order_details.dart';
 import 'package:stettlerproapp/screens/product_details.dart';
 import 'package:stettlerproapp/screens/shopping_cart.dart';
 
+import '../classes/order.dart';
 import '../classes/product.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/product_data.dart';
 
 class ProductList extends StatefulWidget {
-  const ProductList({super.key, this.client});
+  const ProductList(
+      {super.key,
+      this.client,
+      //this.productList,
+      //this.quantityList,
+      this.order});
 
   final Client? client;
-
+  //final List<Product>? productList;
+  //final List<int>? quantityList;
+  final Order? order;
 
   @override
   State<ProductList> createState() {
@@ -26,23 +35,43 @@ class _ProductListState extends State<ProductList> {
   List<Product> filteredProducts = products;
   final ValueNotifier<int> quantity = ValueNotifier<int>(1);
 
-
   void _selectProduct(BuildContext context, String id) {
-    final singleProduct =
-        products.where((product) => product.id == id).toList();
+    final singleProduct = products.firstWhere(((product) => product.id == id));
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => ProductDetails(
-          product: singleProduct,
-          cartProducts: widget.client!.cartProducts,
-          quantity: quantity,
-          quantityList: widget.client!.quantityList,
-          totalPrice: widget.client!.totalPrice,
-        ),
+        builder: (ctx) => widget.order == null
+            ? ProductDetails(
+                product: singleProduct,
+                cartProducts: widget.client?.cartProducts,
+                quantity: quantity,
+                quantityList: widget.client?.quantityList,
+                totalPrice: widget.client?.totalPrice,
+              )
+            : ProductDetails(
+                product: singleProduct,
+                cartProducts: widget.order!.orderedItems,
+                quantity: quantity,
+                quantityList: widget.order!.orderedQuantity,
+                totalPrice: ValueNotifier<double>(
+                  calculateTotalPrice(widget.order!.orderedQuantity!,
+                      widget.order!.orderedItems),
+                ),
+              ),
       ),
     );
   }
+
+  double calculateTotalPrice(List<int> quantityList, List<Product> orderedItems) {
+  double totalPrice = 0;
+
+  for (int i = 0; i < quantityList.length; i++) {
+    double price = orderedItems[i].price;
+    totalPrice += quantityList[i] * price;
+  }
+
+  return totalPrice;
+}
 
   void _searchProduct(String query) {
     final suggestions = products.where((product) {
@@ -55,19 +84,38 @@ class _ProductListState extends State<ProductList> {
     setState(() => filteredProducts = suggestions);
   }
 
-  void _openCart(){
-    widget.client != null ?
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (ctx) => ShoppingCart(
-          cartItems: widget.client!.cartProducts,
-          quantityList: widget.client!.quantityList,
-          totalPrice: widget.client!.totalPrice,
-          client: widget.client!,
+  void _openCart() {
+    if (widget.client != null && widget.order != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => OrderDetails(
+            cartItems: widget.order!.orderedItems,
+            quantityList: widget.order!.orderedQuantity!,
+            totalPrice: ValueNotifier<double>(
+              calculateTotalPrice(
+                  widget.order!.orderedQuantity!, widget.order!.orderedItems),
+            ),
+            client: widget.client!,
+            order: widget.order!,
+          ),
         ),
-      ),
-    ) : showNoSelectedClientDialog(context);
+      );
+    } else if (widget.client != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => ShoppingCart(
+            cartItems: widget.client!.cartProducts,
+            quantityList: widget.client!.quantityList,
+            totalPrice: widget.client!.totalPrice,
+            client: widget.client!,
+          ),
+        ),
+      );
+    } else {
+      showNoSelectedClientDialog(context);
+    }
   }
 
   showNoSelectedClientDialog(BuildContext context) {
@@ -104,15 +152,14 @@ class _ProductListState extends State<ProductList> {
             alignment: Alignment.center,
             padding: EdgeInsets.zero,
             child: TextButton(
-              child: Text("CONFIRMER",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.white)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }
-            ),
+                child: Text("CONFIRMER",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.white)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
           )
         ],
       ),

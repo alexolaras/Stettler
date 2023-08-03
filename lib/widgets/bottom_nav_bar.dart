@@ -8,12 +8,14 @@ import 'package:stettlerproapp/screens/profile.dart';
 
 import '../classes/client.dart';
 import '../classes/order.dart';
+import '../classes/product.dart';
 import '../providers/orders_provider.dart';
 
 class BottomNavBar extends ConsumerStatefulWidget {
-  const BottomNavBar({super.key, required this.client});
+  const BottomNavBar({super.key, required this.client, this.order});
 
   final Client client;
+  final Order? order;
 
   @override
   BottomNavBarState createState() => BottomNavBarState();
@@ -52,20 +54,47 @@ class BottomNavBarState extends ConsumerState<BottomNavBar> {
           );
 
           ref.read(ordersProvider.notifier).addOrder(order);
+          widget.client.orderList.add(order);
 
           widget.client.cartProducts = [];
           widget.client.quantityList = [];
           widget.client.totalPrice = ValueNotifier<double>(0);
         }
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (ctx) => const Home()));
-        
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => const Home(),
+          ),
+        );
+        _selectedIndex = 2;
+
         break;
       case 1:
-        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ProductList(client: widget.client)));
+          if (widget.order != null && widget.order!.isFinished == false) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => ProductList(
+                  client: widget.client,
+                  order: widget.order,
+                ),
+              ),
+            );
+          } else if(widget.order == null){
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => ProductList(client: widget.client),
+              ),
+            );
+          }
+        _selectedIndex = 2;
+
         break;
       case 3:
-      Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => Profile(client: widget.client)));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => Profile(client: widget.client),
+          ),
+        );
+        _selectedIndex = 2;
         break;
     }
   }
@@ -75,7 +104,6 @@ class BottomNavBarState extends ConsumerState<BottomNavBar> {
     return Stack(
       children: [
         BottomNavigationBar(
-        
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

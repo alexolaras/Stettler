@@ -1,30 +1,33 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
-import 'package:stettlerproapp/screens/client_list.dart';
 import 'package:stettlerproapp/widgets/bottom_nav_bar.dart';
 import 'package:stettlerproapp/widgets/cart_item.dart';
 import 'package:stettlerproapp/widgets/checkout_total.dart';
 
 import '../classes/order.dart';
 import '../classes/product.dart';
+import '../providers/orders_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/styled_button_small.dart';
 
 class OrderDetails extends ConsumerStatefulWidget {
-  const OrderDetails(
+  OrderDetails(
       {super.key,
+      required this.order,
       required this.cartItems,
       required this.quantityList,
       required this.totalPrice,
-      required this.client});
+      required this.client,
+      });
 
+  Order order;
   final List<Product> cartItems;
   final List<int> quantityList;
   final ValueNotifier<double> totalPrice;
   final Client client;
+  
 
   @override
   ConsumerState<OrderDetails> createState() => _OrderDetailsState();
@@ -38,13 +41,24 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
     });
   }
 
-  void _updateOrderHistory(Order order) /*async*/ {
-    //order.orderedItems = orderedItems;
-    //order.orderedQuantity = orderedQuantity;
+  void _updateOrderHistory(Order oldOrder) {
+    Order newOrder = Order(
+    orderNumber: oldOrder.orderNumber,
+    orderedItems: List.from(widget.cartItems),
+    orderedQuantity: List.from(widget.quantityList),
+    isFinished: true,
+    clientId: oldOrder.clientId,
+    clientName: oldOrder.clientName,
+    clientSurname: oldOrder.clientSurname,
+    orderStatus: oldOrder.orderStatus,
+    orderDate: oldOrder.orderDate
 
-  }
-
+  );
   
+  ref.read(ordersProvider.notifier).updateOrder(newOrder);
+  widget.client.orderList.remove(oldOrder);
+  widget.client.orderList.add(newOrder);
+  }
 
   showCheckoutDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -85,11 +99,13 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
                         .textTheme
                         .bodyMedium!
                         .copyWith(color: Colors.white)),
-                onPressed:(){
+                onPressed: () {
                   print("update order history");
-                }
-                     //_updateOrderHistory()
-),
+                  _updateOrderHistory(widget.order);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  //print(widget.order.isFinished);
+                }),
           )
         ],
       ),
@@ -102,72 +118,38 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
     );
   }
 
-  showNoSelectedClientDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      title: Center(
-          child: Text(
-        'Pas de client sélectionné',
-        style: Theme.of(context)
-            .textTheme
-            .bodyLarge!
-            .copyWith(fontWeight: FontWeight.bold),
-      )),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(
-            child: Text(
-              "Veuillez revenir en arrière et sélectionner un client",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color.fromARGB(255, 100, 101, 116),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Container(
-            width: 120,
-            height: 40,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: const Color.fromARGB(255, 44, 213, 111)),
-            alignment: Alignment.center,
-            padding: EdgeInsets.zero,
-            child: TextButton(
-              child: Text("CONFIRMER",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.white)),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (ctx) => const ClientList(),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+  int _selectedItemIndex = -1;
+
+  void removeItemFromCart() {
+    if (_selectedItemIndex >= 0 &&
+        _selectedItemIndex < widget.cartItems.length) {
+      setState(() {
+        final removedProduct = widget.cartItems[_selectedItemIndex];
+        final removedQuantity = widget.quantityList[_selectedItemIndex];
+
+        widget.totalPrice.value -= removedProduct.price * removedQuantity;
+
+        widget.cartItems.removeAt(_selectedItemIndex);
+        widget.quantityList.removeAt(_selectedItemIndex);
+
+        _selectedItemIndex = -1;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Détails de la commande",
         function: CustomAppBarFunction.back,
-        additionalIcon: Icons.delete,
+        additionalIcon: widget.order.isFinished ? null : Icons.delete,
+        additionalFunction: removeItemFromCart,
       ),
-      bottomNavigationBar: BottomNavBar(client: widget.client,),
+      bottomNavigationBar: BottomNavBar(
+        client: widget.client,
+        order:widget.order
+      ),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -177,31 +159,37 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
           itemBuilder: (context, index) {
             if (index < widget.quantityList.length) {
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    _selectedItemIndex = index;
+                  });
+                },
                 child: CartItem(
-                  cartItem: widget.cartItems[index],
-                  quantity: widget.quantityList[index],
-                  totalPrice: widget.totalPrice.value,
-                  updateQuantityCallback: (newQuantity, newPrice) {
-                    updateCartItemQuantity(index, newQuantity, newPrice);
-                  },
-                ),
+                    cartItem: widget.cartItems[index],
+                    quantity: widget.quantityList[index],
+                    totalPrice: widget.totalPrice.value,
+                    updateQuantityCallback: (newQuantity, newPrice) {
+                      updateCartItemQuantity(index, newQuantity, newPrice);
+                    },
+                    isFinished: widget.order.isFinished),
               );
             } else if (index == widget.quantityList.length) {
               return CheckoutTotal(
                 totalPrice: widget.totalPrice,
               );
             } else {
-              return Container(
-                width: double.infinity,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: StyledButtonSmall(
-                  text: "VALIDER COMMANDE",
-                  onPressed: () => showCheckoutDialog(context),
-                  color: Colors.blue[600]!,
-                ),
-              );
+              return widget.order.isFinished
+                  ? Container()
+                  : Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 30),
+                      child: StyledButtonSmall(
+                        text: "VALIDER COMMANDE",
+                        onPressed: () => showCheckoutDialog(context),
+                        color: Colors.blue[600]!,
+                      ),
+                    );
             }
           },
         ),
