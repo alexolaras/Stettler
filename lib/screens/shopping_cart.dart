@@ -63,7 +63,7 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
     });
   }
 
-  void _addToOrderHistory() /*async*/ {
+  void _addToOrderHistory()  {
     if (widget.cartItems.isNotEmpty) {
       final Order order = Order(
           orderNumber: _generateOrdercode(),
@@ -74,17 +74,6 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
           orderedQuantity: widget.quantityList,
           isFinished: true,
           orderStatus: OrderStatus.pending);
-
-      /*var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      // There's no internet connection. You can handle the order differently here,
-      // like storing it locally and showing a message to the user.
-      // For example:
-      _storeOrderLocally(order);
-      _showNoInternetDialog(context);
-    } else {
-      ref.read(ordersProvider.notifier).addOrder(order);
-    }*/
 
       ref.read(ordersProvider.notifier).addOrder(order);
       widget.client.orderList.add(order);
@@ -100,6 +89,8 @@ class _ShoppingCartState extends ConsumerState<ShoppingCart> {
       ),
     );
   }
+
+
 
   String _generateOrdercode() {
     final random = Random();

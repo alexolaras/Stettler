@@ -6,7 +6,6 @@ import 'package:stettlerproapp/widgets/order_data.dart';
 
 import '../classes/product.dart';
 import '../data/dummy_data.dart';
-import '../providers/orders_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/drawer.dart';
 

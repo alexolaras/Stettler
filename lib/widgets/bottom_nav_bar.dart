@@ -8,7 +8,6 @@ import 'package:stettlerproapp/screens/profile.dart';
 
 import '../classes/client.dart';
 import '../classes/order.dart';
-import '../classes/product.dart';
 import '../providers/orders_provider.dart';
 
 class BottomNavBar extends ConsumerStatefulWidget {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/order.dart';
 import 'package:stettlerproapp/screens/order_details.dart';
-import 'package:stettlerproapp/screens/shopping_cart.dart';
 import 'package:stettlerproapp/widgets/order_data.dart';
 
 import '../classes/product.dart';
@@ -22,16 +21,13 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
   final TextEditingController _searchController = TextEditingController();
   List<Order> filteredOrders = [];
   List<Order> orderList = [];
+  //late Future<void> _ordersFuture;
 
   @override
   void initState() {
     super.initState();
-    //WidgetsBinding.instance.addPostFrameCallback((_) { // every time you add an item to the cart it adds the initial items 
-      //initialList();
-      setState(() {
-        filteredOrders = orderList;
-      });
-    //});
+    //_ordersFuture = ref.read(ordersProvider.notifier).loadOrders();
+    filteredOrders = orderList;
   }
 
   @override
@@ -62,19 +58,18 @@ class OrderHistoryState extends ConsumerState<OrderHistory> {
       filteredOrders = suggestions;
     });
   }
-  
-double calculateTotalPrice(List<int> quantityList, List<Product> orderedItems) {
-  double totalPrice = 0;
 
-  for (int i = 0; i < quantityList.length; i++) {
-    double price = orderedItems[i].price;
-    totalPrice += quantityList[i] * price;
+  double calculateTotalPrice(
+      List<int> quantityList, List<Product> orderedItems) {
+    double totalPrice = 0;
+
+    for (int i = 0; i < quantityList.length; i++) {
+      double price = orderedItems[i].price;
+      totalPrice += quantityList[i] * price;
+    }
+
+    return totalPrice;
   }
-
-  return totalPrice;
-}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -130,35 +125,46 @@ double calculateTotalPrice(List<int> quantityList, List<Product> orderedItems) {
               builder: (context, ref, child) {
                 final filteredOrders = ref.watch(ordersProvider);
                 return Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: filteredOrders.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: (){
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (ctx) => OrderDetails(
-                                order: filteredOrders[index],
-                                client: people.firstWhere((person) => person.id == filteredOrders[index].clientId),
-                                cartItems: filteredOrders[index].orderedItems,
-                                quantityList: filteredOrders[index]
-                                    .orderedQuantity!,
-                                totalPrice: ValueNotifier<double>(calculateTotalPrice(filteredOrders[index]
-                                    .orderedQuantity!, filteredOrders[index].orderedItems)),
-                                
-                              ),
+                    child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: filteredOrders.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => OrderDetails(
+                              order: filteredOrders[index],
+                              client: people.firstWhere((person) =>
+                                  person.id == filteredOrders[index].clientId),
+                              cartItems: filteredOrders[index].orderedItems,
+                              quantityList:
+                                  filteredOrders[index].orderedQuantity!,
+                              totalPrice: ValueNotifier<double>(
+                                  calculateTotalPrice(
+                                      filteredOrders[index].orderedQuantity!,
+                                      filteredOrders[index].orderedItems)),
                             ),
-                          );
-                        },
-                        child: OrderData(
-                          order: filteredOrders[index],
-                        ),
-                      );
-                    },
-                  ),
-                );
+                          ),
+                        );
+                      },
+                      child: OrderData(
+                        order: filteredOrders[index],
+                      ), 
+                      /*FutureBuilder(
+                        future: _ordersFuture,
+                        builder: (context, snapshot) => snapshot
+                                    .connectionState ==
+                                ConnectionState.waiting
+                            ? const Center(child: CircularProgressIndicator())
+                            : OrderData(
+                                order: filteredOrders[index],
+                              ),
+                      ),*/
+                    );
+                  },
+                ));
               },
             ),
           ],

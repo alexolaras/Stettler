@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stettlerproapp/classes/client.dart';
+import 'package:stettlerproapp/screens/order_history.dart';
 import 'package:stettlerproapp/widgets/bottom_nav_bar.dart';
 import 'package:stettlerproapp/widgets/cart_item.dart';
 import 'package:stettlerproapp/widgets/checkout_total.dart';
@@ -13,21 +14,20 @@ import '../widgets/drawer.dart';
 import '../widgets/styled_button_small.dart';
 
 class OrderDetails extends ConsumerStatefulWidget {
-  OrderDetails(
-      {super.key,
-      required this.order,
-      required this.cartItems,
-      required this.quantityList,
-      required this.totalPrice,
-      required this.client,
-      });
+  const OrderDetails({
+    super.key,
+    required this.order,
+    required this.cartItems,
+    required this.quantityList,
+    required this.totalPrice,
+    required this.client,
+  });
 
-  Order order;
+  final Order order;
   final List<Product> cartItems;
   final List<int> quantityList;
   final ValueNotifier<double> totalPrice;
   final Client client;
-  
 
   @override
   ConsumerState<OrderDetails> createState() => _OrderDetailsState();
@@ -42,22 +42,22 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
   }
 
   void _updateOrderHistory(Order oldOrder) {
-    Order newOrder = Order(
-    orderNumber: oldOrder.orderNumber,
-    orderedItems: List.from(widget.cartItems),
-    orderedQuantity: List.from(widget.quantityList),
-    isFinished: true,
-    clientId: oldOrder.clientId,
-    clientName: oldOrder.clientName,
-    clientSurname: oldOrder.clientSurname,
-    orderStatus: oldOrder.orderStatus,
-    orderDate: oldOrder.orderDate
+    if (List.from(widget.cartItems).isNotEmpty) {
+      Order newOrder = Order(
+          orderNumber: oldOrder.orderNumber,
+          orderedItems: List.from(widget.cartItems),
+          orderedQuantity: List.from(widget.quantityList),
+          isFinished: true,
+          clientId: oldOrder.clientId,
+          clientName: oldOrder.clientName,
+          clientSurname: oldOrder.clientSurname,
+          orderStatus: oldOrder.orderStatus,
+          orderDate: oldOrder.orderDate);
 
-  );
-  
-  ref.read(ordersProvider.notifier).updateOrder(newOrder);
-  widget.client.orderList.remove(oldOrder);
-  widget.client.orderList.add(newOrder);
+      ref.read(ordersProvider.notifier).updateOrder(newOrder);
+      widget.client.orderList.remove(oldOrder);
+      widget.client.orderList.add(newOrder);
+    }
   }
 
   showCheckoutDialog(BuildContext context) {
@@ -100,11 +100,12 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
                         .bodyMedium!
                         .copyWith(color: Colors.white)),
                 onPressed: () {
-                  print("update order history");
                   _updateOrderHistory(widget.order);
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                  //print(widget.order.isFinished);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => const OrderHistory(),
+                    ),
+                  );
                 }),
           )
         ],
@@ -146,10 +147,8 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
         additionalIcon: widget.order.isFinished ? null : Icons.delete,
         additionalFunction: removeItemFromCart,
       ),
-      bottomNavigationBar: BottomNavBar(
-        client: widget.client,
-        order:widget.order
-      ),
+      bottomNavigationBar:
+          BottomNavBar(client: widget.client, order: widget.order),
       drawer: const CustomDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),

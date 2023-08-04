@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,9 +12,6 @@ import 'package:stettlerproapp/screens/delivery.dart';
 import 'package:stettlerproapp/widgets/app_bar.dart';
 import 'package:stettlerproapp/widgets/client_settings.dart';
 
-import '../classes/order.dart';
-import '../classes/product.dart';
-import '../providers/orders_provider.dart';
 import '../widgets/styled_button_small.dart';
 import 'discount.dart';
 
@@ -35,37 +31,6 @@ class ProfileState extends ConsumerState<Profile> {
   void initState() {
     productListCount = widget.client.cartProducts.length;
     super.initState();
-  }
-
-  void _addToOrderHistory() {
-    final Order order = Order(
-      orderNumber: _generateOrdercode(),
-      clientName: widget.client.name,
-      clientSurname: widget.client.surname,
-      clientId: widget.client.id,
-      orderedItems: widget.client.cartProducts,
-      orderedQuantity: widget.client.quantityList,
-      orderStatus: OrderStatus.pending,
-    );
-
-    ref.read(ordersProvider.notifier).addOrder(order);
-    widget.client.orderList.add(order);
-    print("order was added");
-
-    widget.client.cartProducts = [];
-    widget.client.quantityList = [];
-    widget.client.totalPrice = ValueNotifier<double>(0);
-  }
-
-  String _generateOrdercode() {
-    final random = Random();
-    const availableChars = '1234567890';
-    final randomString = List.generate(
-      7,
-      (index) => availableChars[random.nextInt(availableChars.length)],
-    ).join();
-
-    return randomString;
   }
 
   @override
